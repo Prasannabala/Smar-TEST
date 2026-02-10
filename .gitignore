@@ -1,0 +1,94 @@
+# ============================================
+# Test Case Generation Agent - .gitignore
+# ============================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.whl
+pip-wheel-metadata/
+
+# --- Virtual Environment ---
+venv/
+env/
+.venv/
+ENV/
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.lnk
+
+# --- Streamlit ---
+.streamlit/secrets.toml
+
+# ============================================
+# CRITICAL: Secrets — NEVER commit these
+# ============================================
+.env
+.env.local
+.env.production
+*.pem
+*.key
+credentials.json
+
+# User settings file contains API keys and tokens
+data/settings.json
+
+# ============================================
+# Runtime data — user-specific, not shareable
+# ============================================
+
+# SQLite database (contains client data, history)
+data/app.db
+
+# Exported test files
+data/exports/
+
+# Client uploaded documents
+data/clients/
+
+# ============================================
+# Test & Build artifacts
+# ============================================
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+pytest-report.html
+*.cover
+.tox/
+
+# ============================================
+# Docker
+# ============================================
+docker-compose.override.yml
+
+# ============================================
+# Logs
+# ============================================
+*.log
+logs/
+
+# ============================================
+# Claude / Editor state
+# ============================================
+.claude/

@@ -1,0 +1,73 @@
+E-COMMERCE CHECKOUT FEATURE - REQUIREMENTS DOCUMENT
+
+Feature: Shopping Cart and Checkout Process
+
+Overview:
+Users should be able to add products to their shopping cart, review their selections,
+apply discount codes, and complete the checkout process with payment.
+
+Functional Requirements:
+
+1. Add to Cart
+   - Users must be logged in to add items to cart
+   - Each product page should have an "Add to Cart" button
+   - System should display confirmation message when item is added
+   - Cart icon should update with item count
+   - Users should be able to select quantity (max 10 per item)
+   - System should check inventory availability before adding
+
+2. Shopping Cart
+   - Display all items with product name, image, price, and quantity
+   - Allow users to update quantity or remove items
+   - Show subtotal, tax, shipping, and total price
+   - Display estimated delivery date
+   - Show "Continue Shopping" and "Proceed to Checkout" buttons
+   - Cart should persist across sessions for logged-in users
+   - Show "Empty Cart" message if no items
+
+3. Discount Codes
+   - Provide input field for discount code
+   - Validate code against active promotions
+   - Display error message for invalid/expired codes
+   - Apply discount and update total price
+   - Show discount amount separately in price breakdown
+   - Only one discount code per order allowed
+
+4. Checkout Process
+   - Step 1: Shipping Address
+     * Use saved addresses or enter new address
+     * Validate required fields (name, street, city, zip, country)
+     * Provide option to save address for future use
+
+   - Step 2: Shipping Method
+     * Display available shipping options with costs
+     * Show estimated delivery dates
+     * Free shipping for orders over $100
+
+   - Step 3: Payment
+     * Support credit/debit cards and PayPal
+     * Validate card number, expiry date, CVV
+     * Use secure payment gateway (PCI compliant)
+     * Display order summary with final total
+
+   - Step 4: Order Confirmation
+     * Generate unique order ID
+     * Send confirmation email to customer
+     * Display order details and delivery estimate
+     * Provide "Track Order" option
+
+5. Order Processing
+   - Verify inventory before order confirmation
+   - Deduct items from inventory upon successful payment
+   - Update order status in database
+   - Send notification to warehouse for fulfillment
+
+
+
+Business Rules:
+- Maximum 10 items per order
+- Minimum order value: $10
+- Maximum order value: $10,000
+- Discount codes cannot be combined
+- Free shipping only for domestic orders over $100
+- International orders: flat shipping rate $25
