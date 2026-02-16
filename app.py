@@ -1598,30 +1598,41 @@ def render_advanced_settings_page():
         st.markdown("#### 📤 Restore Settings")
         st.markdown("Upload settings.json to restore your configuration.")
 
-        uploaded_file = st.file_uploader(
-            "Choose settings.json",
-            type=['json'],
-            key="restore_settings_file"
-        )
-        if uploaded_file:
-            # Validate filename
-            if uploaded_file.name != "settings.json":
-                st.error(f"❌ Invalid filename: '{uploaded_file.name}'. Must be named 'settings.json'")
-            else:
-                try:
-                    import json
-                    settings_data = json.load(uploaded_file)
-                    # Directly import and save the settings file
-                    settings_manager.import_all_settings(settings_data)
-                    st.success("✅ Settings imported successfully!")
-                    # Clear the file uploader by removing the session state key
-                    st.session_state.restore_settings_file = None
-                    # Rerun to hide the uploader and show the success message
-                    st.rerun()
-                except json.JSONDecodeError:
-                    st.error("❌ Invalid JSON file")
-                except Exception as e:
-                    st.error(f"❌ Error: {str(e)}")
+        # Initialize session state for import success
+        if 'settings_imported' not in st.session_state:
+            st.session_state.settings_imported = False
+
+        # Show file uploader only if import hasn't succeeded yet
+        if not st.session_state.settings_imported:
+            uploaded_file = st.file_uploader(
+                "Choose settings.json",
+                type=['json'],
+                key="restore_settings_file"
+            )
+            if uploaded_file:
+                # Validate filename
+                if uploaded_file.name != "settings.json":
+                    st.error(f"❌ Invalid filename: '{uploaded_file.name}'. Must be named 'settings.json'")
+                else:
+                    try:
+                        import json
+                        settings_data = json.load(uploaded_file)
+                        # Directly import and save the settings file
+                        settings_manager.import_all_settings(settings_data)
+                        # Set flag to hide uploader and show success
+                        st.session_state.settings_imported = True
+                        st.rerun()
+                    except json.JSONDecodeError:
+                        st.error("❌ Invalid JSON file")
+                    except Exception as e:
+                        st.error(f"❌ Error: {str(e)}")
+        else:
+            # Show success message when import is complete
+            st.success("✅ Settings imported successfully!")
+            # Option to import another file
+            if st.button("Import Another File", key="import_another"):
+                st.session_state.settings_imported = False
+                st.rerun()
 
     st.markdown("---")
     st.markdown("#### 📊 Settings Storage Location")
