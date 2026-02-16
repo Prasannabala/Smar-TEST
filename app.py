@@ -16,6 +16,7 @@ st.set_page_config(
 
 # Import modules after page config
 from config.settings import get_settings, save_settings, Settings
+from config.settings_manager import SettingsManager
 from config.llm_config import LLMProvider, llm_config
 from core.llm_adapter import get_llm_adapter, OllamaAdapter
 from core.document_parser import DocumentParser
@@ -27,6 +28,9 @@ from models.test_case import TestSuite
 from storage.database import get_database
 from ui.styles import apply_custom_styles, COLORS, get_brand_badge, get_brand_header, get_author_footer
 from ui.components import UIComponents
+
+# Initialize Settings Manager (auto-loads from ~/.smar-test/)
+settings_manager = SettingsManager()
 
 
 # Apply custom styles
@@ -91,7 +95,7 @@ st.markdown("""
 
 
 def init_session_state():
-    """Initialize session state variables."""
+    """Initialize session state variables and auto-load settings."""
     defaults = {
         'current_page': 'generate',
         'selected_client_id': None,
@@ -104,6 +108,15 @@ def init_session_state():
     for key, value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = value
+
+    # Auto-load settings from ~/.smar-test/settings.json
+    if 'settings_loaded' not in st.session_state:
+        saved_settings = settings_manager.load_settings()
+        if saved_settings:
+            # Apply saved settings to current settings
+            for key, value in saved_settings.items():
+                st.session_state[f'setting_{key}'] = value
+        st.session_state.settings_loaded = True
 
 
 def check_llm_connection() -> bool:
@@ -162,6 +175,56 @@ def render_sidebar():
             ):
                 st.session_state.current_page = page_key
                 st.rerun()
+
+        st.divider()
+
+        # Settings Management Section
+        st.markdown("**Settings Management**")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("📥 Load", use_container_width=True, type="secondary", key="load_settings"):
+                st.session_state.show_load_settings = True
+
+        with col2:
+            if st.button("📤 Save", use_container_width=True, type="secondary", key="save_settings"):
+                st.session_state.show_save_settings = True
+
+        # Load Settings Modal
+        if st.session_state.get('show_load_settings', False):
+            st.info("📥 Upload a saved settings JSON file")
+            uploaded_file = st.file_uploader(
+                "Choose settings file",
+                type=['json'],
+                key="load_settings_file"
+            )
+            if uploaded_file:
+                try:
+                    import json
+                    settings_data = json.load(uploaded_file)
+                    if settings_manager.import_all_settings(settings_data):
+                        st.success("✅ Settings loaded successfully!")
+                        st.session_state.show_load_settings = False
+                        st.rerun()
+                    else:
+                        st.error("❌ Failed to load settings")
+                except Exception as e:
+                    st.error(f"❌ Error loading settings: {str(e)}")
+
+        # Save Settings
+        if st.session_state.get('show_save_settings', False):
+            settings_to_export = settings_manager.export_all_settings()
+            import json
+            settings_json = json.dumps(settings_to_export, indent=2, ensure_ascii=False)
+            st.download_button(
+                label="📥 Download Settings.json",
+                data=settings_json,
+                file_name="smar_test_settings.json",
+                mime="application/json",
+                use_container_width=True,
+                key="download_settings"
+            )
+            st.session_state.show_save_settings = False
 
         st.divider()
 
