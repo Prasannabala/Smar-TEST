@@ -240,7 +240,12 @@ class HuggingFaceAdapter(BaseLLMAdapter):
                         error_detail = error_detail.get("message", str(error_detail))
                 except:
                     error_detail = response.text[:200]
-                last_error = f"Chat API ({response.status_code}): {error_detail}"
+
+                # Specific handling for 403 Forbidden
+                if response.status_code == 403:
+                    last_error = f"Access Denied (403): Check your API token has 'Inference Providers' permission at https://huggingface.co/settings/tokens"
+                else:
+                    last_error = f"Chat API ({response.status_code}): {error_detail}"
             else:
                 result = response.json()
                 if "choices" in result and len(result["choices"]) > 0:
@@ -279,6 +284,20 @@ class HuggingFaceAdapter(BaseLLMAdapter):
                     error_detail = err_json.get("error", str(err_json))
                 except:
                     error_detail = response.text[:200]
+
+                # Specific handling for 403 Forbidden
+                if response.status_code == 403:
+                    raise ConnectionError(
+                        f"Access Denied (403) - HuggingFace API\n\n"
+                        f"Your API token doesn't have the required permissions.\n\n"
+                        f"Fix this:\n"
+                        f"  1. Go to: https://huggingface.co/settings/tokens\n"
+                        f"  2. Click 'New token'\n"
+                        f"  3. Enable 'Make calls to Inference Providers'\n"
+                        f"  4. Copy the token and set it in your LLM Settings\n\n"
+                        f"Error details: {error_detail}"
+                    )
+
                 # If both approaches failed, give a helpful combined error
                 raise ConnectionError(
                     f"HuggingFace API failed for model '{self.model_id}'.\n"
