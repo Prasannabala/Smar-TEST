@@ -1571,38 +1571,35 @@ def render_advanced_settings_page():
 
     st.markdown("---")
 
-    # Create two columns for backup and restore
+    # Create two columns for download and restore
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("#### 💾 Backup Settings")
-        st.markdown("Download your current settings as a JSON file for safe keeping or team sharing.")
+        st.markdown("#### 💾 Download Settings")
+        st.markdown("Download your current settings as settings.json")
 
-        if st.button("📥 Download Backup", type="primary", use_container_width=True, key="backup_settings"):
-            try:
-                settings_to_export = settings_manager.export_all_settings()
-                import json
-                settings_json = json.dumps(settings_to_export, indent=2, ensure_ascii=False)
+        try:
+            settings_to_export = settings_manager.export_all_settings()
+            import json
+            settings_json = json.dumps(settings_to_export, indent=2, ensure_ascii=False)
 
-                st.download_button(
-                    label="📥 Download Settings.json",
-                    data=settings_json,
-                    file_name="smar_test_settings.json",
-                    mime="application/json",
-                    use_container_width=True,
-                    key="download_settings"
-                )
-
-                st.success("✅ Backup ready! Download the file above.")
-            except Exception as e:
-                st.error(f"❌ Error preparing backup: {str(e)}")
+            st.download_button(
+                label="📥 Download settings.json",
+                data=settings_json,
+                file_name="settings.json",
+                mime="application/json",
+                use_container_width=True,
+                type="primary"
+            )
+        except Exception as e:
+            st.error(f"Error: {str(e)}")
 
     with col2:
         st.markdown("#### 📤 Restore Settings")
-        st.markdown("Import a previously backed-up settings JSON file to restore your configuration.")
+        st.markdown("Upload settings.json to restore your configuration.")
 
         uploaded_file = st.file_uploader(
-            "Choose a settings JSON file to restore",
+            "Choose settings.json",
             type=['json'],
             key="restore_settings_file"
         )
@@ -1611,13 +1608,12 @@ def render_advanced_settings_page():
                 import json
                 settings_data = json.load(uploaded_file)
                 if settings_manager.import_all_settings(settings_data):
-                    st.success("✅ Settings restored successfully!")
-                    st.balloons()
+                    st.success("✅ Settings restored!")
                     st.rerun()
                 else:
-                    st.error("❌ Failed to restore settings")
+                    st.error("Invalid settings file")
             except Exception as e:
-                st.error(f"❌ Error restoring settings: {str(e)}")
+                st.error(f"Error: {str(e)}")
 
     st.markdown("---")
     st.markdown("#### 📊 Settings Storage Location")
