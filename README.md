@@ -25,17 +25,19 @@ A professional-grade AI-powered tool for generating comprehensive test cases fro
 
 ## Quick Start
 
-### Prerequisites
+### Option 1: Local Installation (Recommended)
+
+#### Prerequisites
 
 - Python 3.9+
 - Ollama running locally (recommended) with Mistral model
 
-### Installation
+#### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/smar-test.git
-cd smar-test
+git clone https://github.com/Prasannabala/Smar-TEST.git
+cd Smar-TEST
 ```
 
 2. Create virtual environment:
@@ -49,24 +51,48 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. (Optional) Copy environment file:
-```bash
-cp .env.example .env
-# Edit .env with your API keys if using online providers
-```
-
-5. Start Ollama with Mistral:
+4. Start Ollama with Mistral:
 ```bash
 ollama pull mistral:latest
 ollama serve
 ```
 
-6. Run Smar-Test:
+5. Run Smar-Test:
 ```bash
 streamlit run app.py
 ```
 
-7. Open **Smar-Test** at http://localhost:8501 in your browser
+6. Open **Smar-Test** at http://localhost:8501 in your browser
+
+**Data Storage:** All settings and client configs auto-save to `~/.smar-test/` folder
+
+---
+
+### Option 2: Streamlit Cloud (Online Hosting)
+
+#### Deploy in 3 Steps:
+
+1. **Push to GitHub** (already done):
+   - Your code is at: https://github.com/Prasannabala/Smar-TEST
+
+2. **Connect to Streamlit Cloud**:
+   - Go to https://share.streamlit.io
+   - Click "Create app"
+   - Select repository: `Smar-TEST`
+   - Branch: `main`
+   - Main file path: `app.py`
+   - Click "Deploy"
+
+3. **Your app is live!**
+   - Access at: `https://smar-test.streamlit.app` (or custom URL)
+
+#### Using on Streamlit Cloud:
+
+1. **First Visit**: Fill in LLM settings and client configs
+2. **Save Settings**: Click sidebar "📤 Save" to download `smar_test_settings.json`
+3. **Keep JSON File**: Save it on your computer
+4. **Next Visit**: Click sidebar "📥 Load" → Upload the JSON file
+5. **All settings restored!** (API keys excluded for security)
 
 ## Usage
 
@@ -103,44 +129,82 @@ streamlit run app.py
 7. Review generated tests
 8. Export in your preferred format
 
+## Data Persistence & Settings
+
+### Local Machine (`~/.smar-test/`)
+
+When running locally, all settings and client data automatically save to:
+
+```
+~/.smar-test/
+├── settings.json          # LLM provider config (auto-loaded on startup)
+├── clients/               # Client configurations
+│   ├── client_1.json
+│   ├── client_2.json
+│   └── ...
+└── exports/               # Generated test files
+    ├── tests_20240215.xlsx
+    └── ...
+```
+
+**Benefits:**
+- ✅ Settings auto-load on app startup
+- ✅ All data on your machine (private)
+- ✅ Survives app restarts
+- ✅ Easy to backup (just copy the folder)
+
+### Streamlit Cloud (Online)
+
+When using Streamlit Cloud, use the sidebar buttons:
+
+- **📤 Save**: Downloads `smar_test_settings.json` to your computer
+- **📥 Load**: Upload saved JSON to restore settings
+
+**Flow:**
+```
+1. Visit cloud app → Configure settings
+2. Click "📤 Save" → Download JSON to computer
+3. Next visit → Click "📥 Load" → Upload the JSON
+4. ✅ All settings restored! (API keys excluded for security)
+```
+
+---
+
 ## Project Structure
 
 ```
-testcase-generation-agent/
-├── app.py                 # Main Streamlit application
-├── requirements.txt       # Python dependencies
-├── .env.example          # Environment variables template
+Smar-TEST/
+├── app.py                      # Main Streamlit application
+├── requirements.txt            # Python dependencies
+├── .streamlit/
+│   └── config.toml            # Streamlit configuration
 │
-├── config/               # Configuration
-│   ├── settings.py       # App settings
-│   └── llm_config.py     # LLM configurations
+├── config/                     # Configuration
+│   ├── settings.py            # App settings
+│   ├── settings_manager.py    # Settings persistence manager
+│   └── llm_config.py          # LLM configurations
 │
-├── core/                 # Core logic
-│   ├── llm_adapter.py    # LLM provider adapters
-│   ├── document_parser.py # Document parsing
-│   ├── test_generator.py # Test generation engine
-│   └── export_handler.py # Export functionality
+├── core/                       # Core logic
+│   ├── llm_adapter.py         # LLM provider adapters
+│   ├── document_parser.py      # Document parsing
+│   ├── test_generator.py       # Test generation engine
+│   └── export_handler.py       # Export functionality
 │
-├── models/               # Data models
-│   ├── client_context.py # Client context model
-│   ├── test_case.py      # Test case models
-│   └── requirement.py    # Requirement model
+├── models/                     # Data models
+│   ├── client_context.py       # Client context model
+│   ├── test_case.py            # Test case models
+│   └── requirement.py          # Requirement model
 │
-├── storage/              # Data persistence
-│   ├── database.py       # SQLite operations
-│   └── file_manager.py   # File management
+├── storage/                    # Data persistence
+│   ├── database.py            # SQLite operations
+│   └── file_manager.py        # File management
 │
-├── templates/            # Prompt templates
-│   └── prompts.py        # LLM prompts
+├── templates/                  # Prompt templates
+│   └── prompts.py             # LLM prompts
 │
-├── ui/                   # User interface
-│   ├── components.py     # UI components
-│   └── styles.py         # CSS styling
-│
-└── data/                 # Data storage
-    ├── clients/          # Client JSON files
-    ├── exports/          # Generated exports
-    └── app.db            # SQLite database
+└── ui/                         # User interface
+    ├── components.py          # UI components
+    └── styles.py              # CSS styling
 ```
 
 ## Test Case Format
