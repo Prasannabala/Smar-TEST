@@ -1521,84 +1521,64 @@ def render_settings_page():
 
     st.markdown("---")
 
-    # Save button
-    if st.button("Save Settings", type="primary", use_container_width=True):
-        # Update settings based on provider
-        settings.llm_provider = selected_provider
+    # Auto-save settings without showing a button
+    # Update settings based on provider
+    settings.llm_provider = selected_provider
 
-        if selected_provider == LLMProvider.OLLAMA.value:
-            settings.ollama_base_url = ollama_url
-            settings.ollama_model = ollama_model
-            settings.ollama_timeout = ollama_timeout
-            settings.ollama_code_model = ollama_code_model
-            settings.use_code_model_for_scripts = True  # Always enabled - CodeLlama auto-used for scripts
+    if selected_provider == LLMProvider.OLLAMA.value:
+        settings.ollama_base_url = ollama_url
+        settings.ollama_model = ollama_model
+        settings.ollama_timeout = ollama_timeout
+        settings.ollama_code_model = ollama_code_model
+        settings.use_code_model_for_scripts = True  # Always enabled - CodeLlama auto-used for scripts
 
-        elif selected_provider == LLMProvider.HUGGINGFACE.value:
-            settings.hf_model_id = hf_model_id
-            settings.hf_use_api = hf_use_api
-            settings.hf_api_token = hf_api_token
+    elif selected_provider == LLMProvider.HUGGINGFACE.value:
+        settings.hf_model_id = hf_model_id
+        settings.hf_use_api = hf_use_api
+        settings.hf_api_token = hf_api_token
 
-        elif selected_provider == LLMProvider.OPENAI.value:
-            settings.openai_api_key = openai_api_key
-            settings.openai_model = openai_model
+    elif selected_provider == LLMProvider.OPENAI.value:
+        settings.openai_api_key = openai_api_key
+        settings.openai_model = openai_model
 
-        elif selected_provider == LLMProvider.GROQ.value:
-            settings.groq_api_key = groq_api_key
-            settings.groq_model = groq_model
+    elif selected_provider == LLMProvider.GROQ.value:
+        settings.groq_api_key = groq_api_key
+        settings.groq_model = groq_model
 
-        elif selected_provider == LLMProvider.ANTHROPIC.value:
-            settings.anthropic_api_key = anthropic_api_key
-            settings.anthropic_model = anthropic_model
+    elif selected_provider == LLMProvider.ANTHROPIC.value:
+        settings.anthropic_api_key = anthropic_api_key
+        settings.anthropic_model = anthropic_model
 
-        save_settings(settings)
-        st.success("Settings saved!")
-        st.session_state.settings_saved = True
-        st.rerun()
+    # Auto-save to ~/.smar-test/settings.json (seamless experience)
+    save_settings(settings)
+
+    # Show subtle confirmation that settings are auto-saved
+    st.caption("✅ Settings auto-saved to ~/.smar-test/settings.json")
 
 
 def render_advanced_settings_page():
-    """Render the advanced settings page with data management options."""
+    """Render the advanced settings page with backup/restore options."""
     # Show brand header
     st.markdown(get_brand_header(), unsafe_allow_html=True)
 
     st.markdown("### Advanced Settings")
-    st.markdown("Manage your application settings and configurations")
+    st.markdown("Backup and restore your settings")
     st.markdown("---")
 
-    # Create two columns for Load and Save
+    st.markdown("#### Auto-Saving")
+    st.caption("✅ All your settings are automatically saved to: `~/.smar-test/settings.json`")
+    st.caption("🔄 Changes are persisted immediately as you configure your LLM provider")
+
+    st.markdown("---")
+
+    # Create two columns for backup and restore
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("#### 📥 Load Settings")
-        st.markdown("Import previously saved settings and client configurations from a JSON file.")
+        st.markdown("#### 💾 Backup Settings")
+        st.markdown("Download your current settings as a JSON file for safe keeping or team sharing.")
 
-        # Check if settings.json exists
-        if settings_manager.settings_file.exists():
-            st.info(f"📂 Saved settings found at: `~/.smar-test/settings.json`")
-            uploaded_file = st.file_uploader(
-                "Choose a settings JSON file to import",
-                type=['json'],
-                key="load_settings_file"
-            )
-            if uploaded_file:
-                try:
-                    import json
-                    settings_data = json.load(uploaded_file)
-                    if settings_manager.import_all_settings(settings_data):
-                        st.success("✅ Settings loaded successfully!")
-                        st.rerun()
-                    else:
-                        st.error("❌ Failed to load settings")
-                except Exception as e:
-                    st.error(f"❌ Error loading settings: {str(e)}")
-        else:
-            st.warning("No saved settings found. Generated settings will be stored automatically at: `~/.smar-test/settings.json`")
-
-    with col2:
-        st.markdown("#### 📤 Save Settings")
-        st.markdown("Export all your current settings and client configurations as a JSON file for backup or transfer.")
-
-        if st.button("💾 Save Settings JSON", type="primary", use_container_width=True, key="save_all_settings"):
+        if st.button("📥 Download Backup", type="primary", use_container_width=True, key="backup_settings"):
             try:
                 settings_to_export = settings_manager.export_all_settings()
                 import json
@@ -1613,30 +1593,57 @@ def render_advanced_settings_page():
                     key="download_settings"
                 )
 
-                # Show confirmation with path
-                st.success(f"✅ Settings ready to download!")
-                st.info(f"Settings are also auto-saved to: `{settings_manager.settings_file}`")
+                st.success("✅ Backup ready! Download the file above.")
             except Exception as e:
-                st.error(f"❌ Error preparing settings: {str(e)}")
+                st.error(f"❌ Error preparing backup: {str(e)}")
+
+    with col2:
+        st.markdown("#### 📤 Restore Settings")
+        st.markdown("Import a previously backed-up settings JSON file to restore your configuration.")
+
+        uploaded_file = st.file_uploader(
+            "Choose a settings JSON file to restore",
+            type=['json'],
+            key="restore_settings_file"
+        )
+        if uploaded_file:
+            try:
+                import json
+                settings_data = json.load(uploaded_file)
+                if settings_manager.import_all_settings(settings_data):
+                    st.success("✅ Settings restored successfully!")
+                    st.balloons()
+                    st.rerun()
+                else:
+                    st.error("❌ Failed to restore settings")
+            except Exception as e:
+                st.error(f"❌ Error restoring settings: {str(e)}")
 
     st.markdown("---")
-    st.markdown("#### 📊 Settings Storage")
+    st.markdown("#### 📊 Settings Storage Location")
     st.markdown("""
     Your settings are automatically saved to:
     ```
     ~/.smar-test/
-    ├── settings.json          (General settings)
-    ├── clients/
+    ├── settings.json          (LLM config - auto-saved)
+    ├── clients/               (Client configurations)
     │   ├── client_1.json
     │   ├── client_2.json
     │   └── ...
-    └── exports/               (Downloaded files)
+    └── exports/               (Downloaded test files)
     ```
 
-    **Security Notes:**
-    - API keys are NOT saved to JSON files for security
-    - API keys are loaded from environment variables only
-    - Your local settings directory is private to your user account
+    **What Gets Saved:**
+    - ✅ LLM Provider selection and configuration
+    - ✅ Model names and URLs
+    - ✅ Timeouts and generation preferences
+    - ❌ API Keys (excluded for security - use environment variables)
+
+    **How It Works:**
+    1. You configure settings in "⚙️ LLM Settings" page
+    2. Settings automatically save to ~/.smar-test/settings.json
+    3. On next app start, settings auto-load automatically
+    4. No manual save button needed!
     """)
 
 
