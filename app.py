@@ -1271,10 +1271,34 @@ def render_settings_page():
     if selected_provider == LLMProvider.OLLAMA.value:
         st.markdown("### Ollama Settings")
 
+        # Help section for ngrok users
+        with st.expander("📡 Using Ollama from Streamlit Cloud? (Click for ngrok setup)"):
+            st.info("""
+            **Quick Setup (5 minutes):**
+
+            1. **Download ngrok:** https://ngrok.com/download
+            2. **Create free account:** https://ngrok.com
+            3. **Get your token:** https://dashboard.ngrok.com/auth/your-authtoken
+            4. **Setup (Windows PowerShell as Admin):**
+               ```
+               .\\ngrok.exe config add-authtoken YOUR_TOKEN
+               .\\ngrok.exe http 11434
+               ```
+            5. **On Mac/Linux (Terminal):**
+               ```
+               ./ngrok config add-authtoken YOUR_TOKEN
+               ./ngrok http 11434
+               ```
+            6. **Copy the URL** that appears (looks like: https://abc123def456.ngrok.io)
+            7. **Paste it below** in "Base URL"
+
+            ✅ **Remember:** Start Ollama first, then start ngrok in another terminal!
+            """)
+
         ollama_url = st.text_input(
             "Base URL",
             value=settings.ollama_base_url,
-            placeholder="http://localhost:11434"
+            placeholder="http://localhost:11434 OR https://your-ngrok-url.ngrok.io"
         )
 
         # Fetch available models (for manual test case generation only)
