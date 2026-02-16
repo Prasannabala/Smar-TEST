@@ -72,22 +72,58 @@ class Settings:
     default_export_format: str = "excel"  # excel, csv, markdown
 
     def save(self) -> None:
-        """Save settings to JSON file."""
-        with open(SETTINGS_FILE, 'w') as f:
-            json.dump(asdict(self), f, indent=2)
+        """Save settings to JSON file via SettingsManager."""
+        try:
+            from config.settings_manager import SettingsManager
+            manager = SettingsManager()
+            # Don't save API keys
+            settings_dict = asdict(self)
+            settings_dict_safe = {k: v for k, v in settings_dict.items()
+                                 if not k.endswith('_key') and not k.endswith('_token')}
+            manager.save_settings(settings_dict_safe)
+        except ImportError:
+            # Fallback to old location
+            with open(SETTINGS_FILE, 'w') as f:
+                json.dump(asdict(self), f, indent=2)
 
     @classmethod
     def load(cls) -> 'Settings':
-        """Load settings from JSON file or create default."""
+        """Load settings from SettingsManager or JSON file or create default."""
+        # Try to load from SettingsManager first
+        try:
+            from config.settings_manager import SettingsManager
+            manager = SettingsManager()
+            saved_settings = manager.load_settings()
+            if saved_settings:
+                try:
+                    settings = cls(**saved_settings)
+                    # Load sensitive keys from environment
+                    settings.openai_api_key = os.getenv('OPENAI_API_KEY', '')
+                    settings.groq_api_key = os.getenv('GROQ_API_KEY', '')
+                    settings.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY', '')
+                    settings.hf_api_token = os.getenv('HF_API_TOKEN', '')
+                    return settings
+                except TypeError:
+                    pass
+        except ImportError:
+            pass
+
+        # Fallback to old location
         if SETTINGS_FILE.exists():
             try:
                 with open(SETTINGS_FILE, 'r') as f:
                     data = json.load(f)
-                return cls(**data)
+                settings = cls(**data)
+                # Load sensitive keys from environment
+                settings.openai_api_key = os.getenv('OPENAI_API_KEY', '')
+                settings.groq_api_key = os.getenv('GROQ_API_KEY', '')
+                settings.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY', '')
+                settings.hf_api_token = os.getenv('HF_API_TOKEN', '')
+                return settings
             except (json.JSONDecodeError, TypeError):
                 pass
 
-        # Load from environment variables if available
+        # Return defaults with environment variables
         settings = cls()
         settings.openai_api_key = os.getenv('OPENAI_API_KEY', '')
         settings.groq_api_key = os.getenv('GROQ_API_KEY', '')
