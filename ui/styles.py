@@ -704,6 +704,27 @@ def apply_custom_styles():
         ::-webkit-scrollbar-thumb:hover {{
             background: {COLORS['primary_dark']};
         }}
+
+        /* Author footer */
+        .author-footer {{
+            text-align: center;
+            padding: 2rem 0 1.5rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid {COLORS['border']};
+        }}
+
+        .author-footer p {{
+            font-size: 0.8rem !important;
+            font-weight: 500;
+            color: {COLORS['text_muted']} !important;
+            letter-spacing: 0.03em;
+            margin: 0;
+        }}
+
+        .author-footer span.author-name {{
+            color: {COLORS['text_secondary']} !important;
+            font-weight: 600;
+        }}
     </style>
     """
 
@@ -787,3 +808,12 @@ def get_success_box(message: str) -> str:
 def get_info_box(message: str) -> str:
     """Generate HTML for info message box."""
     return f'<div class="info-box">ℹ️ {message}</div>'
+
+
+def get_author_footer() -> str:
+    """Generate HTML for the author footer."""
+    return '''
+    <div class="author-footer">
+        <p>Authored by : <span class="author-name">Prasanna Balachandran</span></p>
+    </div>
+    '''

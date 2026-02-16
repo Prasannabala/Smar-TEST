@@ -25,7 +25,7 @@ from models.client_context import ClientContext, get_client_manager
 from models.requirement import Requirement
 from models.test_case import TestSuite
 from storage.database import get_database
-from ui.styles import apply_custom_styles, COLORS, get_brand_badge, get_brand_header
+from ui.styles import apply_custom_styles, COLORS, get_brand_badge, get_brand_header, get_author_footer
 from ui.components import UIComponents
 
 
@@ -1549,6 +1549,9 @@ def main():
         render_settings_page()
     elif page == 'help':
         render_help_page()
+
+    # Author footer on every page
+    st.markdown(get_author_footer(), unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
