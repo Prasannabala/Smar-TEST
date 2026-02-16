@@ -176,48 +176,128 @@ def apply_custom_styles():
             box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
         }}
 
-        /* Modern buttons with gradient hover */
-        .stButton > button {{
-            background: linear-gradient(135deg, {COLORS['primary']} 0%, {COLORS['primary_dark']} 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0.625rem 1.25rem;
-            font-weight: 600;
-            font-size: 0.875rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+        /* Modern buttons with gradient hover (old + new Streamlit selectors) */
+        .stButton > button,
+        [data-testid="stBaseButton-primary"],
+        [data-testid="stBaseButton-secondary"],
+        [data-testid="stBaseButton-tertiary"],
+        [data-testid="stBaseButton-minimal"],
+        [data-testid="baseButton-primary"],
+        [data-testid="baseButton-secondary"],
+        [data-testid="baseButton-tertiary"],
+        [data-testid="baseButton-minimal"],
+        .stFormSubmitButton > button,
+        .stDownloadButton > button {{
+            background: linear-gradient(135deg, {COLORS['primary']} 0%, {COLORS['primary_dark']} 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 0.625rem 1.25rem !important;
+            font-weight: 600 !important;
+            font-size: 0.875rem !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2) !important;
         }}
 
-        .stButton > button:hover {{
-            background: linear-gradient(135deg, {COLORS['primary_dark']} 0%, {COLORS['accent']} 100%);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        .stButton > button:hover,
+        [data-testid="stBaseButton-primary"]:hover,
+        [data-testid="stBaseButton-secondary"]:hover,
+        [data-testid="stBaseButton-tertiary"]:hover,
+        [data-testid="stBaseButton-minimal"]:hover,
+        [data-testid="baseButton-primary"]:hover,
+        [data-testid="baseButton-secondary"]:hover,
+        [data-testid="baseButton-tertiary"]:hover,
+        [data-testid="baseButton-minimal"]:hover,
+        .stFormSubmitButton > button:hover,
+        .stDownloadButton > button:hover {{
+            background: linear-gradient(135deg, {COLORS['primary_dark']} 0%, {COLORS['accent']} 100%) !important;
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
             transform: translateY(-1px);
         }}
 
-        .stButton > button:active {{
+        .stButton > button:active,
+        [data-testid="stBaseButton-primary"]:active,
+        [data-testid="stBaseButton-secondary"]:active,
+        .stFormSubmitButton > button:active,
+        .stDownloadButton > button:active {{
             transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2) !important;
         }}
 
-        .stButton > button:disabled {{
-            background: {COLORS['text_muted']};
+        .stButton > button:disabled,
+        [data-testid="stBaseButton-primary"]:disabled,
+        [data-testid="stBaseButton-secondary"]:disabled,
+        [data-testid="baseButton-primary"]:disabled,
+        [data-testid="baseButton-secondary"]:disabled,
+        .stFormSubmitButton > button:disabled,
+        .stDownloadButton > button:disabled {{
+            background: {COLORS['text_muted']} !important;
+            color: white !important;
             opacity: 0.5;
             cursor: not-allowed;
         }}
 
-        /* Secondary button */
-        .secondary-btn > button {{
-            background: transparent;
-            color: {COLORS['primary']};
-            border: 2px solid {COLORS['primary']};
-            box-shadow: none;
+        /* Secondary / outline button variant */
+        .secondary-btn > button,
+        [data-testid="stBaseButton-secondary"],
+        [data-testid="baseButton-secondary"] {{
+            background: transparent !important;
+            color: {COLORS['primary']} !important;
+            border: 2px solid {COLORS['primary']} !important;
+            box-shadow: none !important;
         }}
 
-        .secondary-btn > button:hover {{
-            background: {COLORS['primary']};
-            color: white;
-            border-color: {COLORS['primary']};
+        .secondary-btn > button:hover,
+        [data-testid="stBaseButton-secondary"]:hover,
+        [data-testid="baseButton-secondary"]:hover {{
+            background: {COLORS['primary']} !important;
+            color: white !important;
+            border-color: {COLORS['primary']} !important;
+        }}
+
+        /* Download buttons get a distinct look */
+        .stDownloadButton > button {{
+            background: linear-gradient(135deg, {COLORS['success']} 0%, #059669 100%) !important;
+            color: white !important;
+        }}
+
+        .stDownloadButton > button:hover {{
+            background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+        }}
+
+        /* Ensure button text (including icons/spans inside) is white */
+        .stButton > button p,
+        .stButton > button span,
+        [data-testid="stBaseButton-primary"] p,
+        [data-testid="stBaseButton-primary"] span,
+        [data-testid="baseButton-primary"] p,
+        [data-testid="baseButton-primary"] span,
+        .stFormSubmitButton > button p,
+        .stFormSubmitButton > button span,
+        .stDownloadButton > button p,
+        .stDownloadButton > button span {{
+            color: white !important;
+        }}
+
+        /* Secondary button inner text stays primary until hover */
+        .secondary-btn > button p,
+        .secondary-btn > button span,
+        [data-testid="stBaseButton-secondary"] p,
+        [data-testid="stBaseButton-secondary"] span,
+        [data-testid="baseButton-secondary"] p,
+        [data-testid="baseButton-secondary"] span {{
+            color: {COLORS['primary']} !important;
+        }}
+
+        .secondary-btn > button:hover p,
+        .secondary-btn > button:hover span,
+        [data-testid="stBaseButton-secondary"]:hover p,
+        [data-testid="stBaseButton-secondary"]:hover span,
+        [data-testid="baseButton-secondary"]:hover p,
+        [data-testid="baseButton-secondary"]:hover span {{
+            color: white !important;
         }}
 
         /* Input fields with modern styling */
@@ -546,6 +626,41 @@ def apply_custom_styles():
             font-weight: 700;
             font-size: 0.875rem;
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }}
+
+        /* Force label/text visibility regardless of Streamlit theme */
+        .stTextInput > label,
+        .stTextArea > label,
+        .stSelectbox > label,
+        .stMultiSelect > label,
+        .stNumberInput > label,
+        .stFileUploader > label,
+        .stCheckbox > label > span,
+        .stRadio > label,
+        .stSlider > label,
+        [data-testid="stWidgetLabel"],
+        [data-testid="stMarkdownContainer"] p,
+        .stMarkdown p {{
+            color: {COLORS['text_secondary']} !important;
+        }}
+
+        /* Ensure captions remain readable */
+        .stCaption, [data-testid="stCaptionContainer"] {{
+            color: {COLORS['text_muted']} !important;
+        }}
+
+        /* Force main content area background */
+        .main, .main .block-container, [data-testid="stAppViewContainer"] {{
+            background: {COLORS['background']} !important;
+        }}
+
+        /* Force sidebar text colors */
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] span,
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {{
+            color: {COLORS['text']} !important;
         }}
 
         /* Loading spinner custom */

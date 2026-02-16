@@ -41,11 +41,11 @@ st.markdown("""
         visibility: visible !important;
         width: 280px !important;
         min-width: 280px !important;
-        background: #ffffff !important;
+        background: #f8fafc !important;
     }
 
     section[data-testid="stSidebar"] > div {
-        background: #ffffff !important;
+        background: #f8fafc !important;
     }
 
     /* Hide collapse button */
@@ -165,7 +165,7 @@ def render_sidebar():
         is_connected = check_llm_connection()
 
         if is_connected:
-            st.success(f"✓ Connected · {settings.llm_provider.title()}", icon="✅")
+            st.success(f"Using : · {settings.llm_provider.title()}", icon="✅")
         else:
             st.error(f"✗ Not Connected · {settings.llm_provider.title()}", icon="❌")
             if st.button("⚙️ Configure", use_container_width=True, type="primary"):

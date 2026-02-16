@@ -167,7 +167,6 @@ Generated manual test cases include:
 - Best GPU utilization and throughput
 - Supports Llama, Qwen, Mistral, and more
 - Requires NVIDIA GPU with CUDA
-- See [vLLM Setup Guide](docs/VLLM_SETUP.md) for detailed instructions
 
 **Quick Start with Docker:**
 ```bash
