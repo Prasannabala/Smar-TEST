@@ -35,7 +35,12 @@ st.markdown(apply_custom_styles(), unsafe_allow_html=True)
 # Chrome-compatible layout fixes
 st.markdown("""
 <style>
-    /* Force sidebar always visible */
+    /* CRITICAL: Force sidebar always visible */
+    .stApp {
+        display: grid !important;
+        grid-template-columns: 280px 1fr !important;
+    }
+
     section[data-testid="stSidebar"] {
         display: block !important;
         visibility: visible !important;
@@ -43,26 +48,41 @@ st.markdown("""
         min-width: 280px !important;
         max-width: 280px !important;
         background: #f8fafc !important;
-        position: relative !important;
+        position: fixed !important;
+        height: 100vh !important;
+        left: 0 !important;
+        top: 0 !important;
+        z-index: 999999 !important;
+        overflow-y: auto !important;
     }
 
     section[data-testid="stSidebar"] > div {
         background: #f8fafc !important;
         display: block !important;
+        visibility: visible !important;
     }
 
-    /* Hide collapse/expand button */
+    /* Hide collapse/expand button completely */
     button[kind="header"] {
         display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
     }
 
-    /* Prevent sidebar from being hidden */
-    [aria-expanded="false"] section[data-testid="stSidebar"] {
+    /* Force main content to the right */
+    main {
         display: block !important;
+        margin-left: 280px !important;
+        width: calc(100% - 280px) !important;
     }
 
-    /* Force main content margin */
     .main {
+        margin-left: 280px !important;
+        width: calc(100% - 280px) !important;
+    }
+
+    [data-testid="stAppViewContainer"] {
         margin-left: 280px !important;
     }
 

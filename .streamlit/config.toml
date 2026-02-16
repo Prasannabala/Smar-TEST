@@ -5,3 +5,10 @@ backgroundColor = "#f8fafc"
 secondaryBackgroundColor = "#f1f5f9"
 textColor = "#0f172a"
 font = "sans serif"
+
+[client]
+showSidebarNavigation = true
+sidebarState = "expanded"
+
+[logger]
+level = "info"
