@@ -1521,63 +1521,39 @@ def render_settings_page():
 
     st.markdown("---")
 
-    # Store current settings for comparison
-    old_settings = {
-        'provider': settings.llm_provider,
-        'ollama_url': settings.ollama_base_url if selected_provider == LLMProvider.OLLAMA.value else None,
-        'ollama_model': settings.ollama_model if selected_provider == LLMProvider.OLLAMA.value else None,
-        'ollama_timeout': settings.ollama_timeout if selected_provider == LLMProvider.OLLAMA.value else None,
-        'hf_model_id': settings.hf_model_id if selected_provider == LLMProvider.HUGGINGFACE.value else None,
-        'hf_use_api': settings.hf_use_api if selected_provider == LLMProvider.HUGGINGFACE.value else None,
-        'openai_model': settings.openai_model if selected_provider == LLMProvider.OPENAI.value else None,
-        'groq_model': settings.groq_model if selected_provider == LLMProvider.GROQ.value else None,
-        'anthropic_model': settings.anthropic_model if selected_provider == LLMProvider.ANTHROPIC.value else None,
-    }
+    # Save button - only saves when user explicitly clicks
+    if st.button("Save Settings", type="primary", use_container_width=True):
+        # Update settings based on provider
+        settings.llm_provider = selected_provider
 
-    # Update settings based on provider
-    settings.llm_provider = selected_provider
+        if selected_provider == LLMProvider.OLLAMA.value:
+            settings.ollama_base_url = ollama_url
+            settings.ollama_model = ollama_model
+            settings.ollama_timeout = ollama_timeout
+            settings.ollama_code_model = ollama_code_model
+            settings.use_code_model_for_scripts = True
 
-    if selected_provider == LLMProvider.OLLAMA.value:
-        settings.ollama_base_url = ollama_url
-        settings.ollama_model = ollama_model
-        settings.ollama_timeout = ollama_timeout
-        settings.ollama_code_model = ollama_code_model
-        settings.use_code_model_for_scripts = True
+        elif selected_provider == LLMProvider.HUGGINGFACE.value:
+            settings.hf_model_id = hf_model_id
+            settings.hf_use_api = hf_use_api
+            settings.hf_api_token = hf_api_token
 
-    elif selected_provider == LLMProvider.HUGGINGFACE.value:
-        settings.hf_model_id = hf_model_id
-        settings.hf_use_api = hf_use_api
-        settings.hf_api_token = hf_api_token
+        elif selected_provider == LLMProvider.OPENAI.value:
+            settings.openai_api_key = openai_api_key
+            settings.openai_model = openai_model
 
-    elif selected_provider == LLMProvider.OPENAI.value:
-        settings.openai_api_key = openai_api_key
-        settings.openai_model = openai_model
+        elif selected_provider == LLMProvider.GROQ.value:
+            settings.groq_api_key = groq_api_key
+            settings.groq_model = groq_model
 
-    elif selected_provider == LLMProvider.GROQ.value:
-        settings.groq_api_key = groq_api_key
-        settings.groq_model = groq_model
+        elif selected_provider == LLMProvider.ANTHROPIC.value:
+            settings.anthropic_api_key = anthropic_api_key
+            settings.anthropic_model = anthropic_model
 
-    elif selected_provider == LLMProvider.ANTHROPIC.value:
-        settings.anthropic_api_key = anthropic_api_key
-        settings.anthropic_model = anthropic_model
-
-    # Check if settings changed and save only if they did
-    new_settings = {
-        'provider': settings.llm_provider,
-        'ollama_url': settings.ollama_base_url if selected_provider == LLMProvider.OLLAMA.value else None,
-        'ollama_model': settings.ollama_model if selected_provider == LLMProvider.OLLAMA.value else None,
-        'ollama_timeout': settings.ollama_timeout if selected_provider == LLMProvider.OLLAMA.value else None,
-        'hf_model_id': settings.hf_model_id if selected_provider == LLMProvider.HUGGINGFACE.value else None,
-        'hf_use_api': settings.hf_use_api if selected_provider == LLMProvider.HUGGINGFACE.value else None,
-        'openai_model': settings.openai_model if selected_provider == LLMProvider.OPENAI.value else None,
-        'groq_model': settings.groq_model if selected_provider == LLMProvider.GROQ.value else None,
-        'anthropic_model': settings.anthropic_model if selected_provider == LLMProvider.ANTHROPIC.value else None,
-    }
-
-    # Only save if something changed
-    if old_settings != new_settings:
+        # Save to ~/.smar-test/settings.json
         save_settings(settings)
-        st.caption("✅ Settings auto-saved to ~/.smar-test/settings.json")
+        st.success("✅ Settings saved to ~/.smar-test/settings.json")
+        st.rerun()
 
 
 def render_advanced_settings_page():
@@ -1631,11 +1607,9 @@ def render_advanced_settings_page():
             try:
                 import json
                 settings_data = json.load(uploaded_file)
-                if settings_manager.import_all_settings(settings_data):
-                    st.success("✅ Settings restored!")
-                    st.rerun()
-                else:
-                    st.error("Invalid settings file")
+                # Directly import and save the settings file
+                settings_manager.import_all_settings(settings_data)
+                st.success("✅ Settings imported!")
             except Exception as e:
                 st.error(f"Error: {str(e)}")
 
