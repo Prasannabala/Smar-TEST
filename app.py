@@ -1550,9 +1550,9 @@ def render_settings_page():
             settings.anthropic_api_key = anthropic_api_key
             settings.anthropic_model = anthropic_model
 
-        # Save to ~/.smar-test/settings.json
+        # Save to settings.json
         save_settings(settings)
-        st.success("✅ Settings saved to ~/.smar-test/settings.json")
+        st.success(f"✅ Settings saved to {settings_manager.get_settings_path()}")
         st.rerun()
 
 
@@ -1566,7 +1566,7 @@ def render_advanced_settings_page():
     st.markdown("---")
 
     st.markdown("#### Auto-Saving")
-    st.caption("✅ All your settings are automatically saved to: `~/.smar-test/settings.json`")
+    st.caption(f"✅ All your settings are automatically saved to: `{settings_manager.get_settings_path()}`")
     st.caption("🔄 Changes are persisted immediately as you configure your LLM provider")
 
     st.markdown("---")
@@ -1636,10 +1636,12 @@ def render_advanced_settings_page():
 
     st.markdown("---")
     st.markdown("#### 📊 Settings Storage Location")
-    st.markdown("""
+
+    settings_dir_path = str(settings_manager.settings_dir)
+    st.markdown(f"""
     Your settings are automatically saved to:
     ```
-    ~/.smar-test/
+    {settings_dir_path}/
     ├── settings.json          (LLM config - auto-saved)
     ├── clients/               (Client configurations)
     │   ├── client_1.json
@@ -1656,7 +1658,7 @@ def render_advanced_settings_page():
 
     **How It Works:**
     1. You configure settings in "⚙️ LLM Settings" page
-    2. Settings automatically save to ~/.smar-test/settings.json
+    2. Settings automatically save to {settings_manager.get_settings_path()}
     3. On next app start, settings auto-load automatically
     4. No manual save button needed!
     """)

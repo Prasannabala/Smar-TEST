@@ -32,6 +32,10 @@ class SettingsManager:
         # Auto-create folders
         self._ensure_folders()
 
+    def get_settings_path(self) -> str:
+        """Get the full path to settings.json as a string."""
+        return str(self.settings_file)
+
     def _ensure_folders(self) -> None:
         """Create necessary folders if they don't exist."""
         self.settings_dir.mkdir(parents=True, exist_ok=True)
