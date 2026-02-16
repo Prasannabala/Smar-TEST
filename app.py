@@ -5,6 +5,7 @@ A professional AI-powered tool for generating comprehensive test cases from requ
 import streamlit as st
 from datetime import datetime
 from typing import Optional
+import os
 
 # Configure page - must be first Streamlit command
 st.set_page_config(
@@ -1272,7 +1273,8 @@ def render_settings_page():
         st.markdown("### Ollama Settings")
 
         # Detect if running on Streamlit Cloud or locally
-        is_cloud = "streamlit.app" in st.session_state.get("base_url", "") or os.getenv("STREAMLIT_SERVER_HEADLESS") == "true"
+        # Streamlit Cloud runs from /mount/src path and sets STREAMLIT_SERVER_HEADLESS=true
+        is_cloud = os.path.abspath(__file__).startswith("/mount/src") or os.getenv("STREAMLIT_SERVER_HEADLESS") == "true"
 
         if is_cloud:
             # Running on Streamlit Cloud - show ngrok-only instructions
