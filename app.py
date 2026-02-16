@@ -38,10 +38,25 @@ st.markdown("""
     /* Sidebar styling */
     section[data-testid="stSidebar"] {
         background: #f8fafc !important;
+        width: 280px !important;
+        min-width: 280px !important;
     }
 
     section[data-testid="stSidebar"] > div {
         background: #f8fafc !important;
+        width: 100% !important;
+    }
+
+    /* Remove extra whitespace from main content area */
+    .main .block-container {
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* Adjust app container */
+    [data-testid="stAppViewContainer"] {
+        padding: 0 !important;
     }
 
     /* Dropdown improvements for Chrome */
