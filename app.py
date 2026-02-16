@@ -42,6 +42,7 @@ st.markdown("""
         width: 280px !important;
         min-width: 280px !important;
         background: #f8fafc !important;
+        transition: all 0.3s ease !important;
     }
 
     section[data-testid="stSidebar"] > div {
@@ -56,6 +57,11 @@ st.markdown("""
 
     button[kind="header"]:hover {
         background: rgba(99, 102, 241, 0.1) !important;
+    }
+
+    /* Hide sidebar when user toggles */
+    .sidebar-hidden section[data-testid="stSidebar"] {
+        display: none !important;
     }
 
     /* Dropdown improvements for Chrome */
@@ -99,6 +105,7 @@ def init_session_state():
         'requirement': None,
         'llm_connected': False,
         'settings_saved': False,
+        'sidebar_visible': True,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
@@ -172,8 +179,17 @@ def render_sidebar():
             st.caption(f"✅ Using · {settings.llm_provider.title()}")
         else:
             st.caption(f"❌ Not Connected · {settings.llm_provider.title()}")
-            if st.button("⚙️ Configure", use_container_width=True, type="primary"):
-                st.session_state.current_page = 'settings'
+
+        # Toggle button for sidebar visibility
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("👁️ Show", use_container_width=True, type="secondary", key="show_sidebar"):
+                st.session_state.sidebar_visible = True
+                st.rerun()
+
+        with col2:
+            if st.button("🙈 Hide", use_container_width=True, type="secondary", key="hide_sidebar"):
+                st.session_state.sidebar_visible = False
                 st.rerun()
 
 
@@ -1507,7 +1523,36 @@ def render_settings_page():
 def main():
     """Main application entry point."""
     init_session_state()
+
+    # Apply sidebar visibility toggle
+    if not st.session_state.sidebar_visible:
+        st.markdown('<div class="sidebar-hidden">', unsafe_allow_html=True)
+
     render_sidebar()
+
+    # Show floating button to unhide sidebar when hidden
+    if not st.session_state.sidebar_visible:
+        st.markdown("""
+        <div style="
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 999;
+        ">
+            <button onclick="location.reload()" style="
+                background: #6366f1;
+                color: white;
+                border: none;
+                padding: 10px 15px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+                box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+            ">
+                👁️ Show Settings
+            </button>
+        </div>
+        """, unsafe_allow_html=True)
 
     # Route to appropriate page
     page = st.session_state.current_page
@@ -1522,6 +1567,9 @@ def main():
         render_settings_page()
     elif page == 'help':
         render_help_page()
+
+    if not st.session_state.sidebar_visible:
+        st.markdown('</div>', unsafe_allow_html=True)
 
     # Author footer on every page
     st.markdown(get_author_footer(), unsafe_allow_html=True)
