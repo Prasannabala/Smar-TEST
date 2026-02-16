@@ -1193,37 +1193,6 @@ def render_help_page():
 
     st.markdown("---")
 
-    # Additional Resources
-    st.markdown("## 📚 Additional Resources")
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.markdown("""
-        **📖 Documentation**
-        - Full README
-        - API Reference
-        - Configuration Guide
-        """)
-
-    with col2:
-        st.markdown("""
-        **🎓 Tutorials**
-        - Video Guides
-        - Step-by-step Examples
-        - Best Practices
-        """)
-
-    with col3:
-        st.markdown("""
-        **💬 Support**
-        - GitHub Issues
-        - Community Forum
-        - Feature Requests
-        """)
-
-    st.markdown("---")
-
     # Quick Reference Card
     st.markdown("## 🎯 Quick Reference")
 
