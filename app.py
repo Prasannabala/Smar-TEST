@@ -41,11 +41,29 @@ st.markdown("""
         visibility: visible !important;
         width: 280px !important;
         min-width: 280px !important;
+        max-width: 280px !important;
         background: #f8fafc !important;
+        position: relative !important;
     }
 
     section[data-testid="stSidebar"] > div {
         background: #f8fafc !important;
+        display: block !important;
+    }
+
+    /* Hide collapse/expand button */
+    button[kind="header"] {
+        display: none !important;
+    }
+
+    /* Prevent sidebar from being hidden */
+    [aria-expanded="false"] section[data-testid="stSidebar"] {
+        display: block !important;
+    }
+
+    /* Force main content margin */
+    .main {
+        margin-left: 280px !important;
     }
 
     /* Dropdown improvements for Chrome */
