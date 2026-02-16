@@ -5,7 +5,7 @@
 # ============================================
 
 # --- Core Framework ---
-streamlit>=1.30.0
+streamlit==1.32.0
 
 # --- LLM Integration ---
 requests>=2.31.0
