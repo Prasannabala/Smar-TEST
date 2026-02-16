@@ -163,6 +163,7 @@ def render_sidebar():
             'clients': '💼 Client Setup',
             'history': '📋 History',
             'settings': '⚙️ LLM Settings',
+            'advanced': '🔧 Advanced Settings',
             'help': '📖 How to Use'
         }
 
@@ -175,56 +176,6 @@ def render_sidebar():
             ):
                 st.session_state.current_page = page_key
                 st.rerun()
-
-        st.divider()
-
-        # Settings Management Section
-        st.markdown("**Settings Management**")
-
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("📥 Load", use_container_width=True, type="secondary", key="load_settings"):
-                st.session_state.show_load_settings = True
-
-        with col2:
-            if st.button("📤 Save", use_container_width=True, type="secondary", key="save_settings"):
-                st.session_state.show_save_settings = True
-
-        # Load Settings Modal
-        if st.session_state.get('show_load_settings', False):
-            st.info("📥 Upload a saved settings JSON file")
-            uploaded_file = st.file_uploader(
-                "Choose settings file",
-                type=['json'],
-                key="load_settings_file"
-            )
-            if uploaded_file:
-                try:
-                    import json
-                    settings_data = json.load(uploaded_file)
-                    if settings_manager.import_all_settings(settings_data):
-                        st.success("✅ Settings loaded successfully!")
-                        st.session_state.show_load_settings = False
-                        st.rerun()
-                    else:
-                        st.error("❌ Failed to load settings")
-                except Exception as e:
-                    st.error(f"❌ Error loading settings: {str(e)}")
-
-        # Save Settings
-        if st.session_state.get('show_save_settings', False):
-            settings_to_export = settings_manager.export_all_settings()
-            import json
-            settings_json = json.dumps(settings_to_export, indent=2, ensure_ascii=False)
-            st.download_button(
-                label="📥 Download Settings.json",
-                data=settings_json,
-                file_name="smar_test_settings.json",
-                mime="application/json",
-                use_container_width=True,
-                key="download_settings"
-            )
-            st.session_state.show_save_settings = False
 
         st.divider()
 
@@ -1407,6 +1358,46 @@ def render_settings_page():
         )
         st.caption(f"Current: {ollama_timeout // 60} minutes. Increase for complex requirements or slower hardware.")
 
+        st.markdown("---")
+        st.markdown("#### 📚 Recommended Models")
+        st.markdown("""
+        **Fast & Lightweight** (Good for CPU):
+        - **Qwen 2.5 7B** - Fast, comprehensive, supports instruction-following
+          ```bash
+          ollama pull qwen2.5:7b
+          ```
+        - **Mistral 7B** - Good balance of speed and quality
+          ```bash
+          ollama pull mistral:latest
+          ```
+
+        **Better Quality** (Recommended for GPU):
+        - **Llama 2 13B** - High quality, better for complex test cases
+          ```bash
+          ollama pull llama2:13b
+          ```
+        - **Neural Chat 7B** - Optimized for instructions and conversations
+          ```bash
+          ollama pull neural-chat:latest
+          ```
+
+        **Code Generation** (Auto-selected for scripts):
+        - **CodeLlama 7B** - Specialized for code generation
+          ```bash
+          ollama pull codellama:7b
+          ```
+        - **CodeLlama 13B** - Better code quality
+          ```bash
+          ollama pull codellama:13b
+          ```
+
+        **Getting Started:**
+        1. Install Ollama from [ollama.ai](https://ollama.ai)
+        2. Start the service: `ollama serve`
+        3. Pull a model: `ollama pull qwen2.5:7b`
+        4. Refresh this page to see the model in the dropdown
+        """)
+
     elif selected_provider == LLMProvider.HUGGINGFACE.value:
         st.markdown("### Hugging Face Inference Providers")
         st.caption("Access 1000+ models via HuggingFace's unified API — no local GPU required")
@@ -1565,6 +1556,90 @@ def render_settings_page():
         st.rerun()
 
 
+def render_advanced_settings_page():
+    """Render the advanced settings page with data management options."""
+    # Show brand header
+    st.markdown(get_brand_header(), unsafe_allow_html=True)
+
+    st.markdown("### Advanced Settings")
+    st.markdown("Manage your application settings and configurations")
+    st.markdown("---")
+
+    # Create two columns for Load and Save
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("#### 📥 Load Settings")
+        st.markdown("Import previously saved settings and client configurations from a JSON file.")
+
+        # Check if settings.json exists
+        if settings_manager.settings_file.exists():
+            st.info(f"📂 Saved settings found at: `~/.smar-test/settings.json`")
+            uploaded_file = st.file_uploader(
+                "Choose a settings JSON file to import",
+                type=['json'],
+                key="load_settings_file"
+            )
+            if uploaded_file:
+                try:
+                    import json
+                    settings_data = json.load(uploaded_file)
+                    if settings_manager.import_all_settings(settings_data):
+                        st.success("✅ Settings loaded successfully!")
+                        st.rerun()
+                    else:
+                        st.error("❌ Failed to load settings")
+                except Exception as e:
+                    st.error(f"❌ Error loading settings: {str(e)}")
+        else:
+            st.warning("No saved settings found. Generated settings will be stored automatically at: `~/.smar-test/settings.json`")
+
+    with col2:
+        st.markdown("#### 📤 Save Settings")
+        st.markdown("Export all your current settings and client configurations as a JSON file for backup or transfer.")
+
+        if st.button("💾 Save Settings JSON", type="primary", use_container_width=True, key="save_all_settings"):
+            try:
+                settings_to_export = settings_manager.export_all_settings()
+                import json
+                settings_json = json.dumps(settings_to_export, indent=2, ensure_ascii=False)
+
+                st.download_button(
+                    label="📥 Download Settings.json",
+                    data=settings_json,
+                    file_name="smar_test_settings.json",
+                    mime="application/json",
+                    use_container_width=True,
+                    key="download_settings"
+                )
+
+                # Show confirmation with path
+                st.success(f"✅ Settings ready to download!")
+                st.info(f"Settings are also auto-saved to: `{settings_manager.settings_file}`")
+            except Exception as e:
+                st.error(f"❌ Error preparing settings: {str(e)}")
+
+    st.markdown("---")
+    st.markdown("#### 📊 Settings Storage")
+    st.markdown("""
+    Your settings are automatically saved to:
+    ```
+    ~/.smar-test/
+    ├── settings.json          (General settings)
+    ├── clients/
+    │   ├── client_1.json
+    │   ├── client_2.json
+    │   └── ...
+    └── exports/               (Downloaded files)
+    ```
+
+    **Security Notes:**
+    - API keys are NOT saved to JSON files for security
+    - API keys are loaded from environment variables only
+    - Your local settings directory is private to your user account
+    """)
+
+
 def main():
     """Main application entry point."""
     init_session_state()
@@ -1581,6 +1656,8 @@ def main():
         render_history_page()
     elif page == 'settings':
         render_settings_page()
+    elif page == 'advanced':
+        render_advanced_settings_page()
     elif page == 'help':
         render_help_page()
 
