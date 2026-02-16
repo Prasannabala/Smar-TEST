@@ -48,9 +48,14 @@ st.markdown("""
         background: #f8fafc !important;
     }
 
-    /* Hide collapse button */
+    /* Style collapse button for accessibility */
     button[kind="header"] {
-        display: none !important;
+        color: #6366f1 !important;
+        font-weight: 600 !important;
+    }
+
+    button[kind="header"]:hover {
+        background: rgba(99, 102, 241, 0.1) !important;
     }
 
     /* Dropdown improvements for Chrome */
