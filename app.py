@@ -1271,34 +1271,50 @@ def render_settings_page():
     if selected_provider == LLMProvider.OLLAMA.value:
         st.markdown("### Ollama Settings")
 
-        # Help section for ngrok users
-        with st.expander("📡 Using Ollama from Streamlit Cloud? (Click for ngrok setup)"):
-            st.info("""
-            **Quick Setup (5 minutes):**
+        # Detect if running on Streamlit Cloud or locally
+        is_cloud = "streamlit.app" in st.session_state.get("base_url", "") or os.getenv("STREAMLIT_SERVER_HEADLESS") == "true"
 
-            1. **Download ngrok:** https://ngrok.com/download
-            2. **Create free account:** https://ngrok.com
-            3. **Get your token:** https://dashboard.ngrok.com/auth/your-authtoken
-            4. **Setup (Windows PowerShell as Admin):**
-               ```
-               .\\ngrok.exe config add-authtoken YOUR_TOKEN
-               .\\ngrok.exe http 11434
-               ```
-            5. **On Mac/Linux (Terminal):**
-               ```
-               ./ngrok config add-authtoken YOUR_TOKEN
-               ./ngrok http 11434
-               ```
-            6. **Copy the URL** that appears (looks like: https://abc123def456.ngrok.io)
-            7. **Paste it below** in "Base URL"
+        if is_cloud:
+            # Running on Streamlit Cloud - show ngrok-only instructions
+            st.warning("⚠️ Running on Streamlit Cloud")
+            with st.expander("📡 Setup ngrok to use your local Ollama (5 minutes)"):
+                st.info("""
+                **ngrok connects your local Ollama to the cloud app:**
 
-            ✅ **Remember:** Start Ollama first, then start ngrok in another terminal!
-            """)
+                1. **Download ngrok:** https://ngrok.com/download
+                2. **Create free account:** https://ngrok.com
+                3. **Get your token:** https://dashboard.ngrok.com/auth/your-authtoken
+                4. **Setup (Windows PowerShell as Admin):**
+                   ```
+                   .\\ngrok.exe config add-authtoken YOUR_TOKEN
+                   .\\ngrok.exe http 11434
+                   ```
+                5. **On Mac/Linux (Terminal):**
+                   ```
+                   ./ngrok config add-authtoken YOUR_TOKEN
+                   ./ngrok http 11434
+                   ```
+                6. **Copy the URL** that appears (looks like: https://abc123def456.ngrok.io)
+                7. **Paste it below**
+
+                ✅ **Remember:** Start Ollama first, then start ngrok in another terminal!
+                """)
+
+            placeholder_text = "https://your-ngrok-url.ngrok.io"
+        else:
+            # Running locally - show both options
+            with st.expander("📡 Using local machine or cloud with ngrok?"):
+                st.info("""
+                **Local Machine:** Use http://localhost:11434
+                **Streamlit Cloud:** Use ngrok tunnel (see instructions in cloud app)
+                """)
+
+            placeholder_text = "http://localhost:11434"
 
         ollama_url = st.text_input(
             "Base URL",
             value=settings.ollama_base_url,
-            placeholder="http://localhost:11434 OR https://your-ngrok-url.ngrok.io"
+            placeholder=placeholder_text
         )
 
         # Fetch available models (for manual test case generation only)
