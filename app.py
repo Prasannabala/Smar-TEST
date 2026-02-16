@@ -160,14 +160,13 @@ def render_sidebar():
         st.divider()
 
         # Inference Engine status
-        st.markdown("### Inference Engine")
         settings = get_settings()
         is_connected = check_llm_connection()
 
         if is_connected:
-            st.success(f"Using : · {settings.llm_provider.title()}", icon="✅")
+            st.caption(f"✅ Using · {settings.llm_provider.title()}")
         else:
-            st.error(f"✗ Not Connected · {settings.llm_provider.title()}", icon="❌")
+            st.caption(f"❌ Not Connected · {settings.llm_provider.title()}")
             if st.button("⚙️ Configure", use_container_width=True, type="primary"):
                 st.session_state.current_page = 'settings'
                 st.rerun()
