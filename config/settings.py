@@ -94,16 +94,23 @@ class Settings:
 
     @classmethod
     def load(cls) -> 'Settings':
-        """Load settings from SettingsManager or JSON file or create default."""
-        # Try to load from SettingsManager first
+        """
+        Load settings from user's home directory ~/.smar-test/settings.json
+        CRITICAL: Project data/settings.json is NEVER loaded.
+        Each user manages their own settings in their home directory.
+        """
+        # ALWAYS load from SettingsManager (user's home directory ~/.smar-test/)
         try:
             from config.settings_manager import SettingsManager
             manager = SettingsManager()
             saved_settings = manager.load_settings()
             if saved_settings:
                 try:
-                    settings = cls(**saved_settings)
-                    # Load sensitive keys from environment
+                    # Filter out any sensitive keys just in case
+                    safe_data = {k: v for k, v in saved_settings.items()
+                               if not k.endswith('_key') and not k.endswith('_token')}
+                    settings = cls(**safe_data)
+                    # Load sensitive keys ONLY from environment variables
                     settings.openai_api_key = os.getenv('OPENAI_API_KEY', '')
                     settings.groq_api_key = os.getenv('GROQ_API_KEY', '')
                     settings.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY', '')
@@ -114,28 +121,8 @@ class Settings:
         except ImportError:
             pass
 
-        # Fallback to old location
-        if SETTINGS_FILE.exists():
-            try:
-                with open(SETTINGS_FILE, 'r') as f:
-                    data = json.load(f)
-
-                # SECURITY: Filter out any sensitive keys from JSON file
-                # (in case old version saved them)
-                safe_data = {k: v for k, v in data.items()
-                           if not k.endswith('_key') and not k.endswith('_token')}
-
-                settings = cls(**safe_data)
-                # Load sensitive keys ONLY from environment variables
-                settings.openai_api_key = os.getenv('OPENAI_API_KEY', '')
-                settings.groq_api_key = os.getenv('GROQ_API_KEY', '')
-                settings.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY', '')
-                settings.hf_api_token = os.getenv('HF_API_TOKEN', '')
-                return settings
-            except (json.JSONDecodeError, TypeError):
-                pass
-
-        # Return defaults with environment variables
+        # Return clean defaults with environment variables ONLY
+        # NEVER load from project data/settings.json (that's user-specific)
         settings = cls()
         settings.openai_api_key = os.getenv('OPENAI_API_KEY', '')
         settings.groq_api_key = os.getenv('GROQ_API_KEY', '')

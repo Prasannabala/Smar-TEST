@@ -50,20 +50,21 @@ Desktop.ini
 *.key
 credentials.json
 
-# User settings file contains API keys and tokens
+# ============================================
+# CRITICAL: User data — NEVER commit
+# ============================================
+
+# User settings (each user creates their own)
 data/settings.json
+data/
 
-# ============================================
-# Runtime data — user-specific, not shareable
-# ============================================
-
-# SQLite database (contains client data, history)
+# SQLite database (contains sensitive client data)
 data/app.db
 
 # Exported test files
 data/exports/
 
-# Client uploaded documents
+# Client data and documents
 data/clients/
 
 # ============================================
