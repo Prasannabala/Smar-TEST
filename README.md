@@ -88,11 +88,19 @@ streamlit run app.py
 
 #### Using on Streamlit Cloud:
 
-1. **First Visit**: Fill in LLM settings and client configs
-2. **Save Settings**: Click sidebar "📤 Save" to download `smar_test_settings.json`
-3. **Keep JSON File**: Save it on your computer
-4. **Next Visit**: Click sidebar "📥 Load" → Upload the JSON file
-5. **All settings restored!** (API keys excluded for security)
+1. **Important**: Streamlit Cloud **cannot access your local Ollama**
+   - Remote cloud server can't reach `localhost:11434`
+   - ✅ Use cloud API providers instead: **Groq, OpenAI, HuggingFace, or Anthropic**
+   - See **[OLLAMA_CLOUD_SOLUTIONS.md](OLLAMA_CLOUD_SOLUTIONS.md)** for options
+
+2. **First Visit**: Fill in LLM settings (select Groq, OpenAI, HuggingFace, or Anthropic)
+3. **Add API Key**: Enter your API key in LLM Settings (stored in Streamlit Cloud secrets)
+4. **Save Settings**: Settings auto-save to your account
+5. **Next Visit**: Settings auto-load - no reconfiguration needed!
+
+#### Recommended Setup for Streamlit Cloud:
+- **Use Groq**: Free tier, fast, works instantly on cloud
+- Get free API key: https://console.groq.com/keys
 
 ## Usage
 

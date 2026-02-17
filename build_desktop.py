@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Build script for Smar-Test Desktop Application using PyInstaller.
 
@@ -20,6 +21,11 @@ import subprocess
 import shutil
 from pathlib import Path
 
+# Force UTF-8 output on Windows
+if sys.platform == 'win32':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 
 def build_desktop_app():
     """Build the desktop application using PyInstaller."""
@@ -35,18 +41,18 @@ def build_desktop_app():
     # Check if PyInstaller is installed
     try:
         import PyInstaller
-        print(f"✓ PyInstaller found: {PyInstaller.__version__}")
+        print(f"[OK] PyInstaller found: {PyInstaller.__version__}")
     except ImportError:
-        print("✗ PyInstaller not found!")
+        print("[ERROR] PyInstaller not found!")
         print("  Install with: pip install pyinstaller")
         sys.exit(1)
 
     # Check if app_desktop.py exists
     app_file = project_root / "app_desktop.py"
     if not app_file.exists():
-        print(f"✗ {app_file} not found!")
+        print(f"[ERROR] {app_file} not found!")
         sys.exit(1)
-    print(f"✓ Found {app_file}")
+    print(f"[OK] Found {app_file}")
 
     # Clean previous builds
     dist_dir = project_root / "dist"
@@ -57,11 +63,14 @@ def build_desktop_app():
     for path in [dist_dir, build_dir, spec_file]:
         if path.exists():
             if path.is_dir():
-                shutil.rmtree(path)
+                shutil.rmtree(path, ignore_errors=True)
                 print(f"  Removed {path}")
             else:
-                path.unlink()
-                print(f"  Removed {path}")
+                try:
+                    path.unlink()
+                    print(f"  Removed {path}")
+                except:
+                    print(f"  Could not remove {path}, will continue anyway")
 
     # PyInstaller command
     print("\nRunning PyInstaller...")
@@ -88,6 +97,11 @@ def build_desktop_app():
         "--hidden-import=groq",
         "--hidden-import=anthropic",
         "--hidden-import=huggingface_hub",
+        "--hidden-import=jaraco",
+        "--hidden-import=jaraco.classes",
+        "--hidden-import=jaraco.functools",
+        "--hidden-import=jaraco.context",
+        "--hidden-import=jaraco.text",
         str(app_file),
     ]
 
@@ -98,20 +112,20 @@ def build_desktop_app():
 
     try:
         result = subprocess.run(cmd, cwd=project_root, check=True)
-        print(f"\n✓ Build completed successfully!")
+        print(f"\n[OK] Build completed successfully!")
     except subprocess.CalledProcessError as e:
-        print(f"\n✗ Build failed with error code {e.returncode}")
+        print(f"\n[ERROR] Build failed with error code {e.returncode}")
         sys.exit(1)
 
     # Check if executable was created
     exe_path = dist_dir / "Smar-Test.exe"
     if exe_path.exists():
         file_size_mb = exe_path.stat().st_size / (1024 * 1024)
-        print(f"✓ Executable created: {exe_path}")
+        print(f"[OK] Executable created: {exe_path}")
         print(f"  File size: {file_size_mb:.1f} MB")
-        print(f"\n✅ Build complete! You can now run: {exe_path}")
+        print(f"\n[OK] Build complete! You can now run: {exe_path}")
     else:
-        print(f"✗ Executable not found at {exe_path}")
+        print(f"[ERROR] Executable not found at {exe_path}")
         sys.exit(1)
 
 
@@ -124,16 +138,16 @@ def create_installer():
     # Check if NSIS is installed
     nsis_path = Path("C:/Program Files (x86)/NSIS/makensis.exe")
     if not nsis_path.exists():
-        print("\nℹ️  NSIS not found. Skipping installer creation.")
+        print("\n[INFO]  NSIS not found. Skipping installer creation.")
         print("   To create a professional installer:")
         print("   1. Install NSIS: https://nsis.sourceforge.io/")
         print("   2. Run this script again")
         return
 
-    print("✓ NSIS found, creating installer...")
+    print("[OK] NSIS found, creating installer...")
     # TODO: Create NSIS script and build installer
 
-    print("ℹ️  Installer creation not yet implemented")
+    print("[INFO]  Installer creation not yet implemented")
 
 
 if __name__ == "__main__":
