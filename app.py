@@ -19,6 +19,7 @@ st.set_page_config(
 from config.settings import get_settings, save_settings, Settings
 from config.settings_manager import SettingsManager
 from config.llm_config import LLMProvider, llm_config
+from config.environment import detect_environment, get_available_providers, should_show_ollama, should_show_download_button
 from core.llm_adapter import get_llm_adapter, OllamaAdapter
 from core.document_parser import DocumentParser
 from core.test_generator import TestGenerator, GenerationProgress
@@ -29,6 +30,9 @@ from models.test_case import TestSuite
 from storage.database import get_database
 from ui.styles import apply_custom_styles, COLORS, get_brand_badge, get_brand_header, get_author_footer
 from ui.components import UIComponents
+
+# Detect execution environment
+env = detect_environment()
 
 # Initialize Settings Manager (auto-loads from ~/.smar-test/)
 settings_manager = SettingsManager()
@@ -179,6 +183,17 @@ def render_sidebar():
                 st.rerun()
 
         st.divider()
+
+        # Desktop app download button (only show on Streamlit Cloud)
+        if should_show_download_button(env):
+            st.markdown("#### 📥 Desktop App")
+            st.caption("Use Ollama models locally on your PC")
+            st.link_button(
+                "⬇️ Download for Windows",
+                url="https://github.com/Prasannabala/Smar-TEST/releases",
+                use_container_width=True
+            )
+            st.divider()
 
         # Inference Engine status
         settings = get_settings()
@@ -1250,7 +1265,8 @@ def render_settings_page():
     # Provider selection
     st.markdown("### Provider")
 
-    provider_options = {
+    # Build provider options based on environment
+    all_provider_options = {
         LLMProvider.OLLAMA.value: "Ollama (Local)",
         LLMProvider.HUGGINGFACE.value: "Hugging Face",
         LLMProvider.OPENAI.value: "OpenAI",
@@ -1258,25 +1274,29 @@ def render_settings_page():
         LLMProvider.ANTHROPIC.value: "Anthropic",
     }
 
+    # Filter available providers based on environment
+    available_providers = get_available_providers(env)
+    provider_options = {k: v for k, v in all_provider_options.items() if k in available_providers}
+
+    # Show environment notice if on cloud
+    if env["is_cloud"]:
+        st.info("💡 Running on Streamlit Cloud - API models only. Want to use Ollama? Download the desktop app above!")
+
     selected_provider = st.radio(
         "Select LLM Provider",
         options=list(provider_options.keys()),
         format_func=lambda x: provider_options[x],
-        index=list(provider_options.keys()).index(settings.llm_provider),
+        index=list(provider_options.keys()).index(settings.llm_provider) if settings.llm_provider in provider_options else 0,
         horizontal=True
     )
 
     st.markdown("---")
 
     # Provider-specific settings
-    if selected_provider == LLMProvider.OLLAMA.value:
+    if selected_provider == LLMProvider.OLLAMA.value and should_show_ollama(env):
         st.markdown("### Ollama Settings")
 
-        # Detect if running on Streamlit Cloud or locally
-        # Streamlit Cloud runs from /mount/src path and sets STREAMLIT_SERVER_HEADLESS=true
-        is_cloud = os.path.abspath(__file__).startswith("/mount/src") or os.getenv("STREAMLIT_SERVER_HEADLESS") == "true"
-
-        if is_cloud:
+        if env["is_cloud"]:
             # Running on Streamlit Cloud - show ngrok-only instructions
             st.warning("⚠️ Running on Streamlit Cloud")
             with st.expander("📡 Setup ngrok to use your local Ollama (5 minutes)"):
@@ -1304,7 +1324,7 @@ def render_settings_page():
 
             placeholder_text = "https://your-ngrok-url.ngrok.io"
         else:
-            # Running locally - show both options
+            # Running on desktop or locally - show localhost option
             with st.expander("📡 Using local machine or cloud with ngrok?"):
                 st.info("""
                 **Local Machine:** Use http://localhost:11434
