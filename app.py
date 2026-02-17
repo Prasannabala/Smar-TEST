@@ -1470,6 +1470,7 @@ def render_settings_page():
         )
 
         if hf_use_api:
+            st.caption("🔒 API tokens are stored in memory only and never saved to disk")
             hf_api_token = st.text_input(
                 "API Token",
                 value=settings.hf_api_token,
@@ -1532,6 +1533,7 @@ def render_settings_page():
 
     elif selected_provider == LLMProvider.OPENAI.value:
         st.markdown("### OpenAI Settings")
+        st.caption("🔒 API keys are stored in memory only and never saved to disk")
 
         openai_api_key = st.text_input(
             "API Key",
@@ -1549,6 +1551,7 @@ def render_settings_page():
 
     elif selected_provider == LLMProvider.GROQ.value:
         st.markdown("### Groq Settings")
+        st.caption("🔒 API keys are stored in memory only and never saved to disk")
 
         groq_api_key = st.text_input(
             "API Key",
@@ -1566,6 +1569,7 @@ def render_settings_page():
 
     elif selected_provider == LLMProvider.ANTHROPIC.value:
         st.markdown("### Anthropic Settings")
+        st.caption("🔒 API keys are stored in memory only and never saved to disk")
 
         anthropic_api_key = st.text_input(
             "API Key",

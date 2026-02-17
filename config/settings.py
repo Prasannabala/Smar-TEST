@@ -13,13 +13,23 @@ load_dotenv()
 
 # Base paths
 BASE_DIR = Path(__file__).parent.parent
+
+# CRITICAL: User-isolated paths - NOT in project directory
+# Each user gets their own database, clients, exports
+# This prevents data leakage between users
+USER_DATA_DIR = Path.home() / ".smar-test"
+DB_PATH = USER_DATA_DIR / "app.db"
+
+# Legacy paths (kept for backward compatibility, but not used)
 DATA_DIR = BASE_DIR / "data"
 CLIENTS_DIR = DATA_DIR / "clients"
 EXPORTS_DIR = DATA_DIR / "exports"
-DB_PATH = DATA_DIR / "app.db"
 SETTINGS_FILE = DATA_DIR / "settings.json"
 
-# Ensure directories exist
+# Ensure user data directory exists
+USER_DATA_DIR.mkdir(exist_ok=True, parents=True)
+
+# Ensure legacy directories exist (for backward compat)
 DATA_DIR.mkdir(exist_ok=True)
 CLIENTS_DIR.mkdir(exist_ok=True)
 EXPORTS_DIR.mkdir(exist_ok=True)
