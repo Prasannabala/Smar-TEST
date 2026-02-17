@@ -1,0 +1,9 @@
+# Build Requirements for Smar-Test Desktop Application
+# These are ONLY needed if you want to build the executable from source
+# Regular users should just download the pre-built executable
+
+# PyInstaller for converting Python to standalone executables
+pyinstaller==6.1.0
+
+# The main application dependencies are in requirements.txt
+# This file just adds what's needed for the build process
