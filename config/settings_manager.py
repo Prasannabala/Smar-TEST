@@ -60,6 +60,13 @@ class SettingsManager:
         """
         Save settings to ~/.smar-test/settings.json
 
+        SECURITY: API keys and authentication tokens are NEVER saved to disk.
+        They must be provided via environment variables:
+        - OPENAI_API_KEY
+        - GROQ_API_KEY
+        - ANTHROPIC_API_KEY
+        - HF_API_TOKEN
+
         Args:
             settings: Settings dictionary to save
 
@@ -67,7 +74,7 @@ class SettingsManager:
             True if successful, False otherwise
         """
         try:
-            # Don't save sensitive data like API keys
+            # SECURITY: Don't save sensitive data like API keys or tokens
             safe_settings = {k: v for k, v in settings.items()
                            if not k.endswith('_key') and not k.endswith('_token')}
 

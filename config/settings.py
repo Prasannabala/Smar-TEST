@@ -72,19 +72,25 @@ class Settings:
     default_export_format: str = "excel"  # excel, csv, markdown
 
     def save(self) -> None:
-        """Save settings to JSON file via SettingsManager."""
+        """
+        Save settings to JSON file via SettingsManager.
+        SECURITY: API keys and tokens are NEVER saved to disk.
+        They must be provided via environment variables (OPENAI_API_KEY, GROQ_API_KEY, etc.)
+        """
         try:
             from config.settings_manager import SettingsManager
             manager = SettingsManager()
-            # Don't save API keys
+            # SECURITY: Filter out all sensitive keys before saving
             settings_dict = asdict(self)
             settings_dict_safe = {k: v for k, v in settings_dict.items()
                                  if not k.endswith('_key') and not k.endswith('_token')}
             manager.save_settings(settings_dict_safe)
         except ImportError:
-            # Fallback to old location
+            # Fallback to old location - SECURITY: Still filter keys
+            safe_dict = {k: v for k, v in asdict(self).items()
+                        if not k.endswith('_key') and not k.endswith('_token')}
             with open(SETTINGS_FILE, 'w') as f:
-                json.dump(asdict(self), f, indent=2)
+                json.dump(safe_dict, f, indent=2)
 
     @classmethod
     def load(cls) -> 'Settings':
@@ -113,8 +119,14 @@ class Settings:
             try:
                 with open(SETTINGS_FILE, 'r') as f:
                     data = json.load(f)
-                settings = cls(**data)
-                # Load sensitive keys from environment
+
+                # SECURITY: Filter out any sensitive keys from JSON file
+                # (in case old version saved them)
+                safe_data = {k: v for k, v in data.items()
+                           if not k.endswith('_key') and not k.endswith('_token')}
+
+                settings = cls(**safe_data)
+                # Load sensitive keys ONLY from environment variables
                 settings.openai_api_key = os.getenv('OPENAI_API_KEY', '')
                 settings.groq_api_key = os.getenv('GROQ_API_KEY', '')
                 settings.anthropic_api_key = os.getenv('ANTHROPIC_API_KEY', '')
