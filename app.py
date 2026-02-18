@@ -40,6 +40,9 @@ settings_manager = SettingsManager()
 # Initialize user workspace on first use (creates folder structure)
 workspace_paths = settings_manager.initialize_user_workspace()
 
+# Export all clients from database to JSON files for visibility
+settings_manager.export_all_clients_from_db()
+
 
 # Apply custom styles
 st.markdown(apply_custom_styles(), unsafe_allow_html=True)

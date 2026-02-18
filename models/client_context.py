@@ -164,7 +164,11 @@ class ClientContextManager:
             if practice.strip():
                 self.db.add_client_rule(client_id, 'best_practices', practice.strip())
 
-        return self.get(client_id)
+        # Export to JSON file
+        client_context = self.get(client_id)
+        self._export_client_to_json(client_context)
+
+        return client_context
 
     def get(self, client_id: str) -> Optional[ClientContext]:
         """
@@ -240,7 +244,30 @@ class ClientContextManager:
         if 'best_practices' in client_data:
             self.db.update_client_rules(client_id, 'best_practices', client_data['best_practices'])
 
-        return self.get(client_id)
+        # Export to JSON file
+        client_context = self.get(client_id)
+        if client_context:
+            self._export_client_to_json(client_context)
+
+        return client_context
+
+    def _export_client_to_json(self, client_context: ClientContext) -> bool:
+        """
+        Export a client context to a JSON file in ~/.smar-test/clients/.
+
+        Args:
+            client_context: ClientContext to export
+
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            from config.settings_manager import SettingsManager
+            manager = SettingsManager()
+            return manager.export_client_to_json(client_context.id, client_context.to_dict())
+        except Exception as e:
+            print(f"Warning: Could not export client {client_context.name} to JSON: {e}")
+            return False
 
     def delete(self, client_id: str) -> bool:
         """

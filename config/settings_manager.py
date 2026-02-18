@@ -243,3 +243,58 @@ class SettingsManager:
             "clients_dir_exists": self.clients_dir.exists(),
             "exports_dir_exists": self.exports_dir.exists(),
         }
+
+    def export_client_to_json(self, client_id: str, client_data: Dict[str, Any]) -> bool:
+        """
+        Export a single client to a JSON file in clients/ folder.
+        This is called whenever a client is created or updated.
+
+        Args:
+            client_id: Client identifier
+            client_data: Client data to export
+
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            client_file = self.clients_dir / f"{client_id}.json"
+            with open(client_file, 'w', encoding='utf-8') as f:
+                json.dump(client_data, f, indent=2, ensure_ascii=False)
+            return True
+        except IOError as e:
+            print(f"Warning: Could not export client {client_id} to JSON: {e}")
+            return False
+
+    def export_all_clients_from_db(self) -> int:
+        """
+        Export all clients from database to JSON files.
+        Useful for backup and data visibility.
+
+        Returns:
+            Number of clients successfully exported
+        """
+        try:
+            from storage.database import get_database
+            db = get_database()
+            clients = db.get_all_clients()
+
+            export_count = 0
+            for client in clients:
+                client_dict = {
+                    'id': client.get('id'),
+                    'name': client.get('name'),
+                    'project_name': client.get('project_name'),
+                    'project_description': client.get('project_description'),
+                    'tech_stack': client.get('tech_stack', '').split(',') if client.get('tech_stack') else [],
+                    'test_environment': client.get('test_environment'),
+                    'created_at': client.get('created_at'),
+                    'updated_at': client.get('updated_at'),
+                }
+
+                if self.export_client_to_json(client.get('id'), client_dict):
+                    export_count += 1
+
+            return export_count
+        except Exception as e:
+            print(f"Warning: Could not export clients from database: {e}")
+            return 0
