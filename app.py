@@ -37,6 +37,9 @@ env = detect_environment()
 # Initialize Settings Manager (auto-loads from ~/.smar-test/)
 settings_manager = SettingsManager()
 
+# Initialize user workspace on first use (creates folder structure)
+workspace_paths = settings_manager.initialize_user_workspace()
+
 
 # Apply custom styles
 st.markdown(apply_custom_styles(), unsafe_allow_html=True)
@@ -109,10 +112,18 @@ def init_session_state():
         'requirement': None,
         'llm_connected': False,
         'settings_saved': False,
+        'workspace_initialized': False,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
             st.session_state[key] = value
+
+    # Initialize workspace on first run
+    if not st.session_state.workspace_initialized:
+        workspace_status = settings_manager.get_workspace_status()
+        st.session_state.workspace_initialized = True
+        # Store workspace info for debugging if needed
+        st.session_state.workspace_status = workspace_status
 
     # Auto-load settings from ~/.smar-test/settings.json
     if 'settings_loaded' not in st.session_state:

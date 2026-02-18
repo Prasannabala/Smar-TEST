@@ -211,3 +211,35 @@ class SettingsManager:
     def get_clients_path(self) -> Path:
         """Get the path to clients directory."""
         return self.clients_dir
+
+    def initialize_user_workspace(self) -> Dict[str, str]:
+        """
+        Initialize user workspace on first use.
+        Creates all necessary folders and returns paths for logging.
+
+        Returns:
+            Dictionary with paths to created folders
+        """
+        # Ensure all folders are created
+        self._ensure_folders()
+
+        return {
+            "settings_dir": str(self.settings_dir),
+            "settings_file": str(self.settings_file),
+            "clients_dir": str(self.clients_dir),
+            "exports_dir": str(self.exports_dir)
+        }
+
+    def get_workspace_status(self) -> Dict[str, bool]:
+        """
+        Get the status of user workspace.
+
+        Returns:
+            Dictionary with status of each folder/file
+        """
+        return {
+            "settings_dir_exists": self.settings_dir.exists(),
+            "settings_file_exists": self.settings_file.exists(),
+            "clients_dir_exists": self.clients_dir.exists(),
+            "exports_dir_exists": self.exports_dir.exists(),
+        }
