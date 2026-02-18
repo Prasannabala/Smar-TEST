@@ -1512,25 +1512,32 @@ def render_home_page():
             justify-content: center;
         ">
             <div style="margin-bottom: 0.5rem;">
-                <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto;">
+                <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto; display: block;">
+                    <defs>
+                        <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.2"/>
+                        </filter>
+                    </defs>
                     <!-- Red/Coral mask (left) -->
-                    <circle cx="32" cy="42" r="26" fill="#E74C3C"/>
-                    <!-- Red mask eyes -->
-                    <circle cx="25" cy="36" r="4" fill="white"/>
-                    <circle cx="39" cy="36" r="4" fill="white"/>
-                    <circle cx="26" cy="36" r="2.5" fill="#000"/>
-                    <circle cx="40" cy="36" r="2.5" fill="#000"/>
+                    <circle cx="30" cy="45" r="28" fill="#E74C3C" filter="url(#shadow)"/>
+                    <!-- Red mask eyes whites -->
+                    <circle cx="22" cy="38" r="5" fill="white"/>
+                    <circle cx="38" cy="38" r="5" fill="white"/>
+                    <!-- Red mask pupils -->
+                    <circle cx="23" cy="39" r="3" fill="#1a1a1a"/>
+                    <circle cx="39" cy="39" r="3" fill="#1a1a1a"/>
                     <!-- Red mask smile -->
-                    <path d="M 25 50 Q 32 56 39 50" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <path d="M 22 52 Q 30 60 38 52" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                     <!-- Green mask (right) - overlapping -->
-                    <circle cx="68" cy="42" r="26" fill="#1FBC62"/>
-                    <!-- Green mask eyes -->
-                    <circle cx="61" cy="36" r="4" fill="white"/>
-                    <circle cx="75" cy="36" r="4" fill="white"/>
-                    <circle cx="62" cy="36" r="2.5" fill="#000"/>
-                    <circle cx="76" cy="36" r="2.5" fill="#000"/>
+                    <circle cx="70" cy="45" r="28" fill="#1FBC62" filter="url(#shadow)"/>
+                    <!-- Green mask eyes whites -->
+                    <circle cx="62" cy="38" r="5" fill="white"/>
+                    <circle cx="78" cy="38" r="5" fill="white"/>
+                    <!-- Green mask pupils -->
+                    <circle cx="63" cy="39" r="3" fill="#1a1a1a"/>
+                    <circle cx="79" cy="39" r="3" fill="#1a1a1a"/>
                     <!-- Green mask smile -->
-                    <path d="M 61 50 Q 68 56 75 50" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <path d="M 62 52 Q 70 60 78 52" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
