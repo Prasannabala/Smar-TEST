@@ -1404,7 +1404,20 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✅</div>
+            <div style="margin-bottom: 0.5rem;">
+                <svg width="50" height="50" viewBox="0 0 50 50" style="margin: 0 auto;">
+                    <circle cx="25" cy="25" r="24" fill="#3B82F6"/>
+                    <!-- Checklist items -->
+                    <rect x="12" y="12" width="26" height="26" rx="4" fill="none" stroke="white" stroke-width="2"/>
+                    <line x1="16" y1="18" x2="22" y2="18" stroke="white" stroke-width="1.5"/>
+                    <line x1="16" y1="24" x2="22" y2="24" stroke="white" stroke-width="1.5"/>
+                    <line x1="16" y1="30" x2="22" y2="30" stroke="white" stroke-width="1.5"/>
+                    <!-- Checkmarks -->
+                    <path d="M 26 17 L 28 19 L 31 16" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M 26 23 L 28 25 L 31 22" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M 26 29 L 28 31 L 31 28" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Manual Tests</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 Step-by-step<br/>test cases
@@ -1424,7 +1437,20 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🥒</div>
+            <div style="margin-bottom: 0.5rem;">
+                <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto;">
+                    <!-- Green speech bubble background -->
+                    <path d="M 20 15 L 80 15 Q 85 15 85 20 L 85 65 Q 85 70 80 70 L 35 70 L 25 85 L 30 70 L 20 70 Q 15 70 15 65 L 15 20 Q 15 15 20 15" fill="#68A357"/>
+                    <!-- White leaf marks -->
+                    <ellipse cx="30" cy="28" rx="8" ry="12" fill="white" transform="rotate(-25 30 28)"/>
+                    <ellipse cx="50" cy="22" rx="8" ry="12" fill="white" transform="rotate(0 50 22)"/>
+                    <ellipse cx="70" cy="28" rx="8" ry="12" fill="white" transform="rotate(25 70 28)"/>
+                    <ellipse cx="35" cy="50" rx="8" ry="12" fill="white" transform="rotate(-45 35 50)"/>
+                    <ellipse cx="65" cy="50" rx="8" ry="12" fill="white" transform="rotate(45 65 50)"/>
+                    <ellipse cx="30" cy="62" rx="8" ry="12" fill="white" transform="rotate(-65 30 62)"/>
+                    <ellipse cx="70" cy="62" rx="8" ry="12" fill="white" transform="rotate(65 70 62)"/>
+                </svg>
+            </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Gherkin (BDD)</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 Feature files<br/>for Cucumber
@@ -1446,8 +1472,11 @@ def render_home_page():
         ">
             <div style="margin-bottom: 0.5rem;">
                 <svg width="50" height="50" viewBox="0 0 50 50" style="margin: 0 auto;">
-                    <rect width="50" height="50" rx="8" fill="#04AA49"/>
-                    <text x="50%" y="50%" font-size="32" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">S</text>
+                    <rect width="50" height="50" rx="6" fill="#04AA49"/>
+                    <!-- "Se" text -->
+                    <text x="22" y="32" font-size="24" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial, sans-serif">Se</text>
+                    <!-- Checkmark in bottom right -->
+                    <path d="M 32 28 L 36 32 L 42 24" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Selenium</h3>
