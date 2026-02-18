@@ -143,6 +143,16 @@ def get_current_model() -> str:
         return "unknown"
 
 
+def is_running_locally() -> bool:
+    """Determine if the model is running locally."""
+    settings = get_settings()
+    provider = settings.llm_provider
+
+    # Local models
+    local_providers = [LLMProvider.OLLAMA.value, "vllm"]
+    return provider in local_providers
+
+
 def check_llm_connection() -> bool:
     """Check if LLM is available and update session state."""
     try:
@@ -217,6 +227,7 @@ def render_sidebar():
         settings = get_settings()
         is_connected = check_llm_connection()
         current_model = get_current_model()
+        running_locally = is_running_locally()
 
         if is_connected:
             st.caption(f"✅ Provider : {settings.llm_provider.title()}")
@@ -224,6 +235,10 @@ def render_sidebar():
         else:
             st.caption(f"❌ Provider : {settings.llm_provider.title()}")
             st.caption(f"📦 Model : {current_model}")
+
+        # Running locally indicator
+        local_status = "Yes" if running_locally else "No"
+        st.caption(f"🖥️ Running locally : {local_status}")
 
 
 def render_generate_page():
