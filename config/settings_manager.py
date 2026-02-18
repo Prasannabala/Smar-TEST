@@ -280,12 +280,19 @@ class SettingsManager:
 
             export_count = 0
             for client in clients:
+                # Handle tech_stack which might be a string or list
+                tech_stack = client.get('tech_stack', '')
+                if isinstance(tech_stack, str):
+                    tech_stack = [item.strip() for item in tech_stack.split(',') if item.strip()]
+                elif not isinstance(tech_stack, list):
+                    tech_stack = []
+
                 client_dict = {
                     'id': client.get('id'),
                     'name': client.get('name'),
                     'project_name': client.get('project_name'),
                     'project_description': client.get('project_description'),
-                    'tech_stack': client.get('tech_stack', '').split(',') if client.get('tech_stack') else [],
+                    'tech_stack': tech_stack,
                     'test_environment': client.get('test_environment'),
                     'created_at': client.get('created_at'),
                     'updated_at': client.get('updated_at'),
