@@ -1444,7 +1444,12 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌐</div>
+            <div style="margin-bottom: 0.5rem;">
+                <svg width="50" height="50" viewBox="0 0 50 50" style="margin: 0 auto;">
+                    <rect width="50" height="50" rx="8" fill="#04AA49"/>
+                    <text x="50%" y="50%" font-size="32" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">S</text>
+                </svg>
+            </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Selenium</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 Python<br/>automation scripts
@@ -1464,7 +1469,12 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎬</div>
+            <div style="margin-bottom: 0.5rem;">
+                <svg width="50" height="50" viewBox="0 0 50 50" style="margin: 0 auto;">
+                    <circle cx="25" cy="25" r="24" fill="#2D3436"/>
+                    <path d="M 15 25 Q 25 35 35 25 Q 25 15 15 25" fill="#2ECC71" stroke="#2ECC71" stroke-width="2"/>
+                </svg>
+            </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 JavaScript<br/>test specifications
