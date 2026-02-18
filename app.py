@@ -1503,21 +1503,131 @@ def render_home_page():
     # Key features in simple format
     st.markdown("## Key Features")
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3, gap="medium")
 
     with col1:
         st.markdown("""
-        ✅ **Fast** - Generate tests in seconds
-        ✅ **Multiple Formats** - Manual, BDD, Selenium, Playwright
-        ✅ **Local Storage** - All data stored locally
-        """)
+        <div style="
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.3rem;">⚡ Speed</h3>
+            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                Generate comprehensive test cases in <strong>seconds</strong> instead of hours
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
-        ✅ **Secure** - API keys never saved to disk
-        ✅ **Flexible** - Works with any requirements document
-        ✅ **Easy Setup** - Configure in minutes
-        """)
+        <div style="
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.3rem;">🎯 Accuracy</h3>
+            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                AI-powered analysis ensures <strong>consistent</strong> and thorough test coverage
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div style="
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.3rem;">🔄 Flexibility</h3>
+            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                Support for <strong>multiple test formats</strong> in a single generation
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("")
+
+    col1, col2, col3 = st.columns(3, gap="medium")
+
+    with col1:
+        st.markdown("""
+        <div style="
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.3rem;">🔒 Security</h3>
+            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                API keys <strong>never saved</strong> to disk, all data stored locally
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div style="
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.3rem;">📄 Versatility</h3>
+            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                Works with <strong>any requirements</strong> document format
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div style="
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.3rem;">⚙️ Easy Setup</h3>
+            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                Configure your LLM and <strong>start generating</strong> in minutes
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("---")
 
