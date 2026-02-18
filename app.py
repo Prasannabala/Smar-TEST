@@ -168,7 +168,6 @@ def render_sidebar():
             'clients': '💼 Client Setup',
             'history': '📋 History',
             'settings': '⚙️ LLM Settings',
-            'advanced': '🔧 Advanced Settings',
             'help': '📖 How to Use'
         }
 
@@ -1622,114 +1621,6 @@ def render_settings_page():
         st.rerun()
 
 
-def render_advanced_settings_page():
-    """Render the advanced settings page with backup/restore options."""
-    # Show brand header
-    st.markdown(get_brand_header(), unsafe_allow_html=True)
-
-    st.markdown("### Advanced Settings")
-    st.markdown("Backup and restore your settings")
-    st.markdown("---")
-
-    st.markdown("#### Auto-Saving")
-    st.caption(f"✅ All your settings are automatically saved to: `{settings_manager.get_settings_path()}`")
-    st.caption("🔄 Changes are persisted immediately as you configure your LLM provider")
-
-    st.markdown("---")
-
-    # Create two columns for download and restore
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown("#### 💾 Download Settings")
-        st.markdown("Download your current settings as settings.json")
-
-        try:
-            settings_to_export = settings_manager.export_all_settings()
-            import json
-            settings_json = json.dumps(settings_to_export, indent=2, ensure_ascii=False)
-
-            st.download_button(
-                label="📥 Download settings.json",
-                data=settings_json,
-                file_name="settings.json",
-                mime="application/json",
-                use_container_width=True,
-                type="primary"
-            )
-        except Exception as e:
-            st.error(f"Error: {str(e)}")
-
-    with col2:
-        st.markdown("#### 📤 Restore Settings")
-        st.markdown("Upload settings.json to restore your configuration.")
-
-        # Initialize session state for import success
-        if 'settings_imported' not in st.session_state:
-            st.session_state.settings_imported = False
-
-        # Show file uploader only if import hasn't succeeded yet
-        if not st.session_state.settings_imported:
-            uploaded_file = st.file_uploader(
-                "Choose settings.json",
-                type=['json'],
-                key="restore_settings_file"
-            )
-            if uploaded_file:
-                # Validate filename
-                if uploaded_file.name != "settings.json":
-                    st.error(f"❌ Invalid filename: '{uploaded_file.name}'. Must be named 'settings.json'")
-                else:
-                    try:
-                        import json
-                        settings_data = json.load(uploaded_file)
-                        # Directly import and save the settings file
-                        settings_manager.import_all_settings(settings_data)
-                        # Set flag to hide uploader and show success
-                        st.session_state.settings_imported = True
-                        st.rerun()
-                    except json.JSONDecodeError:
-                        st.error("❌ Invalid JSON file")
-                    except Exception as e:
-                        st.error(f"❌ Error: {str(e)}")
-        else:
-            # Show success message when import is complete
-            st.success("✅ Settings imported successfully!")
-            # Option to import another file
-            if st.button("Import Another File", key="import_another"):
-                st.session_state.settings_imported = False
-                st.rerun()
-
-    st.markdown("---")
-    st.markdown("#### 📊 Settings Storage Location")
-
-    settings_dir_path = str(settings_manager.settings_dir)
-    st.markdown(f"""
-    Your settings are automatically saved to:
-    ```
-    {settings_dir_path}/
-    ├── settings.json          (LLM config - auto-saved)
-    ├── clients/               (Client configurations)
-    │   ├── client_1.json
-    │   ├── client_2.json
-    │   └── ...
-    └── exports/               (Downloaded test files)
-    ```
-
-    **What Gets Saved:**
-    - ✅ LLM Provider selection and configuration
-    - ✅ Model names and URLs
-    - ✅ Timeouts and generation preferences
-    - ❌ API Keys (excluded for security - use environment variables)
-
-    **How It Works:**
-    1. You configure settings in "⚙️ LLM Settings" page
-    2. Settings automatically save to {settings_manager.get_settings_path()}
-    3. On next app start, settings auto-load automatically
-    4. No manual save button needed!
-    """)
-
-
 def main():
     """Main application entry point."""
     init_session_state()
@@ -1746,8 +1637,6 @@ def main():
         render_history_page()
     elif page == 'settings':
         render_settings_page()
-    elif page == 'advanced':
-        render_advanced_settings_page()
     elif page == 'help':
         render_help_page()
 
