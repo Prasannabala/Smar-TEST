@@ -1424,7 +1424,7 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎭</div>
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📝</div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Gherkin (BDD)</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 Feature files<br/>for Cucumber
@@ -1444,7 +1444,7 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🤖</div>
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🐍</div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Selenium</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 Python<br/>automation scripts
@@ -1464,33 +1464,13 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎪</div>
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚙️</div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 JavaScript<br/>test specifications
             </p>
         </div>
         """, unsafe_allow_html=True)
-
-    st.markdown("---")
-
-    # Quick action buttons
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        if st.button("⚙️ Configure LLM", use_container_width=True):
-            st.session_state.current_page = 'settings'
-            st.rerun()
-
-    with col2:
-        if st.button("💼 Create Client", use_container_width=True):
-            st.session_state.current_page = 'clients'
-            st.rerun()
-
-    with col3:
-        if st.button("🚀 Generate Tests", use_container_width=True):
-            st.session_state.current_page = 'generate'
-            st.rerun()
 
     st.markdown("---")
 
