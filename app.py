@@ -1513,16 +1513,24 @@ def render_home_page():
         ">
             <div style="margin-bottom: 0.5rem;">
                 <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto;">
-                    <!-- Red mask (left) -->
-                    <circle cx="35" cy="40" r="28" fill="#E74C3C"/>
-                    <circle cx="28" cy="35" r="5" fill="white"/>
-                    <circle cx="42" cy="35" r="5" fill="white"/>
-                    <path d="M 28 50 Q 35 55 42 50" stroke="white" stroke-width="2" fill="none"/>
-                    <!-- Green mask (right) -->
-                    <circle cx="65" cy="40" r="28" fill="#27AE60"/>
-                    <circle cx="58" cy="35" r="5" fill="white"/>
-                    <circle cx="72" cy="35" r="5" fill="white"/>
-                    <path d="M 58 50 Q 65 55 72 50" stroke="white" stroke-width="2" fill="none"/>
+                    <!-- Red/Coral mask (left) -->
+                    <circle cx="32" cy="42" r="26" fill="#E74C3C"/>
+                    <!-- Red mask eyes -->
+                    <circle cx="25" cy="36" r="4" fill="white"/>
+                    <circle cx="39" cy="36" r="4" fill="white"/>
+                    <circle cx="26" cy="36" r="2.5" fill="#000"/>
+                    <circle cx="40" cy="36" r="2.5" fill="#000"/>
+                    <!-- Red mask smile -->
+                    <path d="M 25 50 Q 32 56 39 50" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <!-- Green mask (right) - overlapping -->
+                    <circle cx="68" cy="42" r="26" fill="#1FBC62"/>
+                    <!-- Green mask eyes -->
+                    <circle cx="61" cy="36" r="4" fill="white"/>
+                    <circle cx="75" cy="36" r="4" fill="white"/>
+                    <circle cx="62" cy="36" r="2.5" fill="#000"/>
+                    <circle cx="76" cy="36" r="2.5" fill="#000"/>
+                    <!-- Green mask smile -->
+                    <path d="M 61 50 Q 68 56 75 50" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
                 </svg>
             </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
