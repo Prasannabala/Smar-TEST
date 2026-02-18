@@ -18,7 +18,6 @@ st.set_page_config(
 # Import modules after page config
 from config.settings import get_settings, save_settings, Settings
 from config.settings_manager import SettingsManager
-from config.user_session import UserSession
 from config.llm_config import LLMProvider, llm_config
 from config.environment import detect_environment, get_available_providers, should_show_ollama, should_show_download_button
 from core.llm_adapter import get_llm_adapter, OllamaAdapter
@@ -204,18 +203,6 @@ def render_sidebar():
             st.caption(f"✅ Using · {settings.llm_provider.title()}")
         else:
             st.caption(f"❌ Not Connected · {settings.llm_provider.title()}")
-
-        st.divider()
-
-        # User session info and logout
-        current_user = UserSession.get_current_user()
-        if current_user:
-            st.caption(f"👤 Logged in as: **{current_user}**")
-
-            if st.button("🚪 Logout", use_container_width=True, type="secondary"):
-                st.info("Logging out and clearing your session...")
-                UserSession.logout()
-                st.rerun()
 
 
 def render_generate_page():
@@ -1744,17 +1731,7 @@ def render_advanced_settings_page():
 
 
 def main():
-    """Main application entry point with user authentication."""
-    # CRITICAL: Require user authentication to prevent data leakage between users
-    if not UserSession.require_authentication():
-        return  # Show login screen, stop execution
-
-    # Verify session integrity hasn't been tampered with
-    if not UserSession.verify_session_integrity():
-        st.error("❌ Session integrity check failed. Please log in again.")
-        UserSession.logout()
-        st.rerun()
-
+    """Main application entry point."""
     init_session_state()
     render_sidebar()
 
