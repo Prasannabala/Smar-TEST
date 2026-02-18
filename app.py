@@ -101,6 +101,47 @@ st.markdown("""
         padding: 0.75rem 1rem !important;
         font-size: 0.875rem !important;
     }
+
+    /* Scrollbar styling - thin and minimal */
+    /* Chrome, Edge, Safari */
+    ::-webkit-scrollbar {
+        width: 6px !important;
+        height: 6px !important;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1 !important;
+        border-radius: 3px !important;
+        min-height: 40px !important;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8 !important;
+    }
+
+    /* Firefox */
+    * {
+        scrollbar-width: thin !important;
+        scrollbar-color: #cbd5e1 transparent !important;
+    }
+
+    /* Scrollbar in sidebar specifically */
+    section[data-testid="stSidebar"] ::-webkit-scrollbar {
+        width: 5px !important;
+    }
+
+    section[data-testid="stSidebar"] ::-webkit-scrollbar-thumb {
+        background: #b0bec5 !important;
+        border-radius: 3px !important;
+    }
+
+    section[data-testid="stSidebar"] ::-webkit-scrollbar-thumb:hover {
+        background: #90a4ae !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
