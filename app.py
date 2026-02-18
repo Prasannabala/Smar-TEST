@@ -1390,31 +1390,87 @@ def render_home_page():
     # What can you do
     st.markdown("## What You Can Generate")
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4 = st.columns(4, gap="small")
 
     with col1:
         st.markdown("""
-        ### 📋 Manual Tests
-        Step-by-step test cases
-        """)
+        <div style="
+            border: 2px solid #6366f1;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        ">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📋</div>
+            <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Manual Tests</h3>
+            <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
+                Step-by-step<br/>test cases
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
-        ### 🎭 Gherkin (BDD)
-        Feature files for Cucumber
-        """)
+        <div style="
+            border: 2px solid #6366f1;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        ">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎭</div>
+            <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Gherkin (BDD)</h3>
+            <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
+                Feature files<br/>for Cucumber
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col3:
         st.markdown("""
-        ### 🤖 Selenium
-        Python automation scripts
-        """)
+        <div style="
+            border: 2px solid #6366f1;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        ">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🤖</div>
+            <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Selenium</h3>
+            <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
+                Python<br/>automation scripts
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col4:
         st.markdown("""
-        ### 🎪 Playwright
-        JavaScript test specifications
-        """)
+        <div style="
+            border: 2px solid #6366f1;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        ">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎪</div>
+            <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
+            <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
+                JavaScript<br/>test specifications
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("---")
 
@@ -1441,21 +1497,61 @@ def render_home_page():
     # Key features
     st.markdown("## Key Features")
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3, gap="small")
 
     with col1:
         st.markdown("""
-        • **Fast** - Generate tests in seconds
-        • **Multiple Formats** - Manual, BDD, Selenium, Playwright
-        • **Local Storage** - All data stored locally
-        """)
+        <div style="
+            border: 2px solid #6366f1;
+            padding: 1.5rem;
+            border-radius: 12px;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.1rem; color: #0f172a;">⚡ Speed</h3>
+            <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5;">
+                Generate test cases in <strong>seconds</strong> instead of hours
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
-        • **Secure** - API keys never saved to disk
-        • **Flexible** - Works with any requirements document
-        • **Easy Setup** - Configure in minutes
-        """)
+        <div style="
+            border: 2px solid #6366f1;
+            padding: 1.5rem;
+            border-radius: 12px;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.1rem; color: #0f172a;">🔒 Security</h3>
+            <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5;">
+                API keys <strong>never saved</strong> to disk, all data local
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col3:
+        st.markdown("""
+        <div style="
+            border: 2px solid #6366f1;
+            padding: 1.5rem;
+            border-radius: 12px;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        ">
+            <h3 style="margin: 0 0 1rem 0; font-size: 1.1rem; color: #0f172a;">⚙️ Setup</h3>
+            <p style="margin: 0; font-size: 0.9rem; color: #475569; line-height: 1.5;">
+                Configure your LLM and <strong>start generating</strong> in minutes
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("---")
 
