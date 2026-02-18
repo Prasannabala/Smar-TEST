@@ -1512,32 +1512,29 @@ def render_home_page():
             justify-content: center;
         ">
             <div style="margin-bottom: 0.5rem;">
-                <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto; display: block;">
-                    <defs>
-                        <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-                            <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.2"/>
-                        </filter>
-                    </defs>
-                    <!-- Red/Coral mask (left) -->
-                    <circle cx="30" cy="45" r="28" fill="#E74C3C" filter="url(#shadow)"/>
-                    <!-- Red mask eyes whites -->
-                    <circle cx="22" cy="38" r="5" fill="white"/>
-                    <circle cx="38" cy="38" r="5" fill="white"/>
-                    <!-- Red mask pupils -->
-                    <circle cx="23" cy="39" r="3" fill="#1a1a1a"/>
-                    <circle cx="39" cy="39" r="3" fill="#1a1a1a"/>
-                    <!-- Red mask smile -->
-                    <path d="M 22 52 Q 30 60 38 52" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                    <!-- Green mask (right) - overlapping -->
-                    <circle cx="70" cy="45" r="28" fill="#1FBC62" filter="url(#shadow)"/>
-                    <!-- Green mask eyes whites -->
-                    <circle cx="62" cy="38" r="5" fill="white"/>
-                    <circle cx="78" cy="38" r="5" fill="white"/>
-                    <!-- Green mask pupils -->
-                    <circle cx="63" cy="39" r="3" fill="#1a1a1a"/>
-                    <circle cx="79" cy="39" r="3" fill="#1a1a1a"/>
-                    <!-- Green mask smile -->
-                    <path d="M 62 52 Q 70 60 78 52" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg width="50" height="50" viewBox="0 0 200 160" style="margin: 0 auto; display: block;">
+                    <!-- Red mask (left) - tilted/rotated for dynamic look -->
+                    <g transform="translate(50, 55) rotate(-15)">
+                        <!-- Mask shape -->
+                        <ellipse cx="0" cy="0" rx="35" ry="40" fill="#D94436"/>
+                        <!-- Left eye hole -->
+                        <ellipse cx="-12" cy="-8" rx="6" ry="8" fill="white"/>
+                        <!-- Right eye hole -->
+                        <ellipse cx="12" cy="-8" rx="6" ry="8" fill="white"/>
+                        <!-- Mouth smile -->
+                        <path d="M -8 15 Q 0 22 8 15" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </g>
+                    <!-- Green mask (right) - more upright, happier expression -->
+                    <g transform="translate(130, 45)">
+                        <!-- Mask shape -->
+                        <ellipse cx="0" cy="0" rx="35" ry="40" fill="#2DA044"/>
+                        <!-- Left eye hole -->
+                        <ellipse cx="-12" cy="-10" rx="7" ry="9" fill="white"/>
+                        <!-- Right eye hole -->
+                        <ellipse cx="12" cy="-10" rx="7" ry="9" fill="white"/>
+                        <!-- Wide happy smile -->
+                        <path d="M -10 12 Q 0 22 10 12" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    </g>
                 </svg>
             </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
