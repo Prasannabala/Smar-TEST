@@ -1440,15 +1440,28 @@ def render_home_page():
             <div style="margin-bottom: 0.5rem;">
                 <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto;">
                     <!-- Green speech bubble background -->
-                    <path d="M 20 15 L 80 15 Q 85 15 85 20 L 85 65 Q 85 70 80 70 L 35 70 L 25 85 L 30 70 L 20 70 Q 15 70 15 65 L 15 20 Q 15 15 20 15" fill="#68A357"/>
-                    <!-- White leaf marks -->
-                    <ellipse cx="30" cy="28" rx="8" ry="12" fill="white" transform="rotate(-25 30 28)"/>
-                    <ellipse cx="50" cy="22" rx="8" ry="12" fill="white" transform="rotate(0 50 22)"/>
-                    <ellipse cx="70" cy="28" rx="8" ry="12" fill="white" transform="rotate(25 70 28)"/>
-                    <ellipse cx="35" cy="50" rx="8" ry="12" fill="white" transform="rotate(-45 35 50)"/>
-                    <ellipse cx="65" cy="50" rx="8" ry="12" fill="white" transform="rotate(45 65 50)"/>
-                    <ellipse cx="30" cy="62" rx="8" ry="12" fill="white" transform="rotate(-65 30 62)"/>
-                    <ellipse cx="70" cy="62" rx="8" ry="12" fill="white" transform="rotate(65 70 62)"/>
+                    <path d="M 15 10 L 75 10 Q 85 10 85 20 L 85 70 Q 85 80 75 80 L 40 80 L 25 95 L 35 80 L 15 80 Q 5 80 5 70 L 5 20 Q 5 10 15 10" fill="#5FCA5F"/>
+                    <!-- Dark green asterisk/flower pattern -->
+                    <g fill="#2D5C2D">
+                        <!-- Center circle -->
+                        <circle cx="50" cy="48" r="6"/>
+                        <!-- Petal at top -->
+                        <ellipse cx="50" cy="28" rx="6" ry="10"/>
+                        <!-- Petal at bottom -->
+                        <ellipse cx="50" cy="68" rx="6" ry="10"/>
+                        <!-- Petal at left -->
+                        <ellipse cx="30" cy="48" rx="10" ry="6"/>
+                        <!-- Petal at right -->
+                        <ellipse cx="70" cy="48" rx="10" ry="6"/>
+                        <!-- Petal at top-right -->
+                        <ellipse cx="63" cy="35" rx="7" ry="9" transform="rotate(45 63 35)"/>
+                        <!-- Petal at bottom-right -->
+                        <ellipse cx="63" cy="61" rx="7" ry="9" transform="rotate(-45 63 61)"/>
+                        <!-- Petal at bottom-left -->
+                        <ellipse cx="37" cy="61" rx="7" ry="9" transform="rotate(45 37 61)"/>
+                        <!-- Petal at top-left -->
+                        <ellipse cx="37" cy="35" rx="7" ry="9" transform="rotate(-45 37 35)"/>
+                    </g>
                 </svg>
             </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Gherkin (BDD)</h3>
