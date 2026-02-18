@@ -251,6 +251,20 @@ def render_sidebar():
         local_status = "Yes" if running_locally else "No"
         st.caption(f"🖥️ Running locally : {local_status}")
 
+        st.divider()
+
+        # Data folder location with clickable link
+        from pathlib import Path
+        data_folder = Path.home() / ".smar-test"
+        st.markdown("### 📁 Your Data")
+        st.markdown(
+            f"""
+            Your settings, clients, and exports are stored here:
+
+            [`{str(data_folder)}`](file://{str(data_folder)})
+            """
+        )
+
 
 def render_generate_page():
     """Render the main test generation page."""
