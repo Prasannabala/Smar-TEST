@@ -1512,24 +1512,9 @@ def render_home_page():
             justify-content: center;
         ">
             <div style="margin-bottom: 0.5rem;">
-                <svg width="50" height="50" viewBox="0 0 120 100" style="margin: 0 auto;">
-                    <!-- Red/Tragedy mask (left) -->
-                    <circle cx="35" cy="50" r="28" fill="#E85C47"/>
-                    <!-- Red mask left eye -->
-                    <circle cx="28" cy="42" r="5" fill="white"/>
-                    <!-- Red mask right eye -->
-                    <circle cx="42" cy="42" r="5" fill="white"/>
-                    <!-- Red mask sad mouth (downward curve) -->
-                    <path d="M 28 58 Q 35 52 42 58" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-
-                    <!-- Green/Comedy mask (right) - overlapping -->
-                    <circle cx="85" cy="50" r="28" fill="#2DA555"/>
-                    <!-- Green mask left eye -->
-                    <circle cx="78" cy="42" r="5" fill="white"/>
-                    <!-- Green mask right eye -->
-                    <circle cx="92" cy="42" r="5" fill="white"/>
-                    <!-- Green mask happy mouth (upward curve) -->
-                    <path d="M 78 62 Q 85 70 92 62" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="margin: 0 auto;">
+                    <path d="M50 0L0 25V75L50 100L100 75V25L50 0ZM87.5 71.25L50 90L12.5 71.25V28.75L50 10L87.5 28.75V71.25Z" fill="#2EAD33"/>
+                    <path d="M50 20L20 35V65L50 80L80 65V35L50 20ZM70 60L50 70L30 60V40L50 30L70 40V60Z" fill="#2EAD33"/>
                 </svg>
             </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
