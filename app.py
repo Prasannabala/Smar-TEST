@@ -124,6 +124,25 @@ def init_session_state():
         st.session_state.settings_loaded = True
 
 
+def get_current_model() -> str:
+    """Get the current model name based on LLM provider."""
+    settings = get_settings()
+    provider = settings.llm_provider
+
+    if provider == LLMProvider.OLLAMA.value:
+        return settings.ollama_model
+    elif provider == LLMProvider.OPENAI.value:
+        return settings.openai_model
+    elif provider == LLMProvider.GROQ.value:
+        return settings.groq_model
+    elif provider == LLMProvider.ANTHROPIC.value:
+        return settings.anthropic_model
+    elif provider == LLMProvider.HUGGINGFACE.value:
+        return settings.hf_model_id
+    else:
+        return "unknown"
+
+
 def check_llm_connection() -> bool:
     """Check if LLM is available and update session state."""
     try:
@@ -197,11 +216,14 @@ def render_sidebar():
         # Inference Engine status
         settings = get_settings()
         is_connected = check_llm_connection()
+        current_model = get_current_model()
 
         if is_connected:
-            st.caption(f"✅ Using · {settings.llm_provider.title()}")
+            st.caption(f"✅ Provider : {settings.llm_provider.title()}")
+            st.caption(f"📦 Model : {current_model}")
         else:
-            st.caption(f"❌ Not Connected · {settings.llm_provider.title()}")
+            st.caption(f"❌ Provider : {settings.llm_provider.title()}")
+            st.caption(f"📦 Model : {current_model}")
 
 
 def render_generate_page():
