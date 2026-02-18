@@ -1385,34 +1385,98 @@ def render_home_page():
 
     st.markdown("---")
 
-    # What can you do
+    # What can you do - with styled cards
     st.markdown("## What You Can Generate")
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4 = st.columns(4, gap="medium")
 
     with col1:
         st.markdown("""
-        ### 📋 Manual Tests
-        Step-by-step test cases
-        """)
+        <div style="
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">📋</div>
+            <h3 style="margin: 0.5rem 0; font-size: 1.2rem;">Manual Tests</h3>
+            <p style="margin: 0.5rem 0; font-size: 0.95rem; opacity: 0.9;">
+                Step-by-step<br/>test cases
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
-        ### 🎭 Gherkin (BDD)
-        Feature files
-        """)
+        <div style="
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎭</div>
+            <h3 style="margin: 0.5rem 0; font-size: 1.2rem;">Gherkin (BDD)</h3>
+            <p style="margin: 0.5rem 0; font-size: 0.95rem; opacity: 0.9;">
+                Feature files<br/>for Cucumber
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col3:
         st.markdown("""
-        ### 🤖 Selenium
-        Python scripts
-        """)
+        <div style="
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🤖</div>
+            <h3 style="margin: 0.5rem 0; font-size: 1.2rem;">Selenium</h3>
+            <p style="margin: 0.5rem 0; font-size: 0.95rem; opacity: 0.9;">
+                Python<br/>automation scripts
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col4:
         st.markdown("""
-        ### 🎪 Playwright
-        JavaScript tests
-        """)
+        <div style="
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        ">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎪</div>
+            <h3 style="margin: 0.5rem 0; font-size: 1.2rem;">Playwright</h3>
+            <p style="margin: 0.5rem 0; font-size: 0.95rem; opacity: 0.9;">
+                JavaScript<br/>test specifications
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("---")
 
