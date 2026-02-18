@@ -1470,9 +1470,17 @@ def render_home_page():
             justify-content: center;
         ">
             <div style="margin-bottom: 0.5rem;">
-                <svg width="50" height="50" viewBox="0 0 50 50" style="margin: 0 auto;">
-                    <circle cx="25" cy="25" r="24" fill="#2D3436"/>
-                    <path d="M 15 25 Q 25 35 35 25 Q 25 15 15 25" fill="#2ECC71" stroke="#2ECC71" stroke-width="2"/>
+                <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto;">
+                    <!-- Red mask (left) -->
+                    <circle cx="35" cy="40" r="28" fill="#E74C3C"/>
+                    <circle cx="28" cy="35" r="5" fill="white"/>
+                    <circle cx="42" cy="35" r="5" fill="white"/>
+                    <path d="M 28 50 Q 35 55 42 50" stroke="white" stroke-width="2" fill="none"/>
+                    <!-- Green mask (right) -->
+                    <circle cx="65" cy="40" r="28" fill="#27AE60"/>
+                    <circle cx="58" cy="35" r="5" fill="white"/>
+                    <circle cx="72" cy="35" r="5" fill="white"/>
+                    <path d="M 58 50 Q 65 55 72 50" stroke="white" stroke-width="2" fill="none"/>
                 </svg>
             </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
