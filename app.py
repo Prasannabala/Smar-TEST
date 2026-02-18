@@ -1404,7 +1404,7 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📋</div>
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✅</div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Manual Tests</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 Step-by-step<br/>test cases
@@ -1424,7 +1424,7 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📝</div>
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🥒</div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Gherkin (BDD)</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 Feature files<br/>for Cucumber
@@ -1444,7 +1444,7 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🐍</div>
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌐</div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Selenium</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 Python<br/>automation scripts
@@ -1464,7 +1464,7 @@ def render_home_page():
             flex-direction: column;
             justify-content: center;
         ">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚙️</div>
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎬</div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
             <p style="margin: 0.5rem 0; font-size: 0.9rem; color: #475569;">
                 JavaScript<br/>test specifications
