@@ -1363,200 +1363,102 @@ def render_home_page():
     st.markdown(get_brand_header(), unsafe_allow_html=True)
 
     st.markdown("""
-    # Welcome to Smar-Test 🧪
-
-    ## What is Smar-Test?
-
-    **Smar-Test** is an intelligent, AI-powered test case generation tool that transforms requirements documents into comprehensive, production-ready test cases in seconds.
-
-    Instead of spending hours manually writing test cases, Smar-Test analyzes your requirements and automatically generates:
-    - 📋 Detailed manual test cases with step-by-step instructions
-    - 🎭 BDD scenarios in Gherkin format
-    - 🤖 Selenium automation scripts (Python)
-    - 🎪 Playwright test specifications (JavaScript/TypeScript)
+    ## AI-Powered Test Case Generation for Modern QA Teams
     """)
 
     st.markdown("---")
 
-    # Three main columns for key benefits
-    st.markdown("## 💡 Why Use Smar-Test?")
+    # Quick stat columns
+    col1, col2, col3, col4 = st.columns(4)
 
-    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Generate in", "Seconds", "vs Hours")
+
+    with col2:
+        st.metric("Test Types", "4+", "Formats")
+
+    with col3:
+        st.metric("Data Storage", "Local", "Secure")
+
+    with col4:
+        st.metric("Setup Time", "< 5min", "Ready")
+
+    st.markdown("---")
+
+    # What can you do
+    st.markdown("## What You Can Generate")
+
+    col1, col2, col3, col4 = st.columns(4)
 
     with col1:
         st.markdown("""
-        ### ⚡ Speed
-
-        Generate comprehensive test cases in **seconds** instead of hours.
-
-        Save weeks of manual test case writing work.
+        ### 📋 Manual Tests
+        Step-by-step test cases
         """)
 
     with col2:
         st.markdown("""
-        ### 🎯 Accuracy
-
-        AI-powered analysis ensures **consistent** and **thorough** test coverage.
-
-        Catch edge cases and boundary conditions automatically.
+        ### 🎭 Gherkin (BDD)
+        Feature files
         """)
 
     with col3:
         st.markdown("""
-        ### 🔄 Flexibility
+        ### 🤖 Selenium
+        Python scripts
+        """)
 
-        Support for **multiple test formats** in a single generation.
-
-        Use the same requirements for manual AND automated testing.
+    with col4:
+        st.markdown("""
+        ### 🎪 Playwright
+        JavaScript tests
         """)
 
     st.markdown("---")
 
-    st.markdown("## 🚀 How It Works")
-
-    st.markdown("""
-    ### The Process (4 Simple Steps)
-
-    **1️⃣ Configure Your LLM**
-    - Choose from Ollama (free, local), OpenAI, Groq, Anthropic, or HuggingFace
-    - Set up your preferred AI model
-
-    **2️⃣ Create Client Context (Optional)**
-    - Define your project's specific testing rules
-    - Add navigation rules, business rules, and best practices
-    - Apply client-specific testing conventions
-
-    **3️⃣ Upload Requirements**
-    - Paste or upload your requirements document (TXT, PDF, DOCX)
-    - Select which test types to generate
-    - Choose test options (edge cases, negative tests, etc.)
-
-    **4️⃣ Generate & Export**
-    - Let AI generate comprehensive test cases
-    - Review results in multiple formats
-    - Export to Excel, CSV, Markdown, or ZIP
-    """)
-
-    st.markdown("---")
-
-    st.markdown("## 📊 What You Can Generate")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown("""
-        ### Manual Test Cases
-        - Detailed step-by-step test cases
-        - Expected results and pass/fail criteria
-        - Test data suggestions
-        - Integration with your test management tools
-
-        ### Gherkin (BDD)
-        - Cucumber feature files
-        - Acceptance criteria in plain English
-        - Ready for BDD frameworks
-        - Easy for non-technical stakeholders
-        """)
-
-    with col2:
-        st.markdown("""
-        ### Selenium Scripts
-        - Python automation code
-        - XPath selectors
-        - Waits and assertions
-        - Ready to run in CI/CD pipelines
-
-        ### Playwright Tests
-        - JavaScript/TypeScript test specs
-        - Cross-browser test support
-        - Modern async/await syntax
-        - Integration with GitHub Actions
-        """)
-
-    st.markdown("---")
-
-    st.markdown("## 🎯 Perfect For")
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.markdown("""
-        ### QA Teams
-        - Reduce manual test case writing
-        - Maintain test coverage
-        - Focus on complex scenarios
-        """)
-
-    with col2:
-        st.markdown("""
-        ### Developers
-        - Generate unit test ideas
-        - Understand edge cases
-        - Improve code coverage
-        """)
-
-    with col3:
-        st.markdown("""
-        ### Product Managers
-        - Ensure requirements are testable
-        - Validate specifications
-        - Estimate testing effort
-        """)
-
-    st.markdown("---")
-
-    st.markdown("## 🔐 Your Data is Safe")
-
-    st.markdown("""
-    - ✅ All data stored **locally** in `~/.smar-test/`
-    - ✅ Support for **local models** (Ollama) - no external servers needed
-    - ✅ API keys **never saved** to disk
-    - ✅ Full **control** over your data
-    - ✅ **GDPR-compliant** - no data sharing with third parties
-    """)
-
-    st.markdown("---")
-
-    st.markdown("## 📚 Getting Started")
-
-    st.markdown("""
-    ### Next Steps:
-    """)
-
+    # Quick action buttons
     col1, col2, col3 = st.columns(3)
 
     with col1:
         if st.button("⚙️ Configure LLM", use_container_width=True):
             st.session_state.current_page = 'settings'
             st.rerun()
-        st.caption("Set up your AI model")
 
     with col2:
         if st.button("💼 Create Client", use_container_width=True):
             st.session_state.current_page = 'clients'
             st.rerun()
-        st.caption("Define testing rules")
 
     with col3:
         if st.button("🚀 Generate Tests", use_container_width=True):
             st.session_state.current_page = 'generate'
             st.rerun()
-        st.caption("Start generating!")
+
+    st.markdown("---")
+
+    # Key features in simple format
+    st.markdown("## Key Features")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+        ✅ **Fast** - Generate tests in seconds
+        ✅ **Multiple Formats** - Manual, BDD, Selenium, Playwright
+        ✅ **Local Storage** - All data stored locally
+        """)
+
+    with col2:
+        st.markdown("""
+        ✅ **Secure** - API keys never saved to disk
+        ✅ **Flexible** - Works with any requirements document
+        ✅ **Easy Setup** - Configure in minutes
+        """)
 
     st.markdown("---")
 
     st.markdown("""
-    ### 📖 Need Help?
-
-    - Check the **📖 How to Use** page for detailed instructions
-    - Review your **📋 History** to see past generations
-    - Visit the **📁 Your Data** link in the sidebar to access stored files
-    """)
-
-    st.markdown("""
-    ---
-
-    **Ready to revolutionize your testing process?** Let's get started! 🎉
+    **Need help?** Check the **📖 How to Use** page for detailed instructions.
     """)
 
 
