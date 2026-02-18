@@ -1512,28 +1512,28 @@ def render_home_page():
             justify-content: center;
         ">
             <div style="margin-bottom: 0.5rem;">
-                <svg width="50" height="50" viewBox="0 0 200 160" style="margin: 0 auto; display: block;">
+                <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto;">
                     <!-- Red mask (left) - tilted/rotated for dynamic look -->
-                    <g transform="translate(50, 55) rotate(-15)">
+                    <g transform="translate(25, 42) rotate(-15)">
                         <!-- Mask shape -->
-                        <ellipse cx="0" cy="0" rx="35" ry="40" fill="#D94436"/>
+                        <ellipse cx="0" cy="0" rx="17" ry="20" fill="#D94436"/>
                         <!-- Left eye hole -->
-                        <ellipse cx="-12" cy="-8" rx="6" ry="8" fill="white"/>
+                        <ellipse cx="-6" cy="-4" rx="3" ry="4" fill="white"/>
                         <!-- Right eye hole -->
-                        <ellipse cx="12" cy="-8" rx="6" ry="8" fill="white"/>
+                        <ellipse cx="6" cy="-4" rx="3" ry="4" fill="white"/>
                         <!-- Mouth smile -->
-                        <path d="M -8 15 Q 0 22 8 15" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        <path d="M -4 8 Q 0 11 4 8" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
                     </g>
                     <!-- Green mask (right) - more upright, happier expression -->
-                    <g transform="translate(130, 45)">
+                    <g transform="translate(65, 42)">
                         <!-- Mask shape -->
-                        <ellipse cx="0" cy="0" rx="35" ry="40" fill="#2DA044"/>
+                        <ellipse cx="0" cy="0" rx="17" ry="20" fill="#2DA044"/>
                         <!-- Left eye hole -->
-                        <ellipse cx="-12" cy="-10" rx="7" ry="9" fill="white"/>
+                        <ellipse cx="-6" cy="-5" rx="3.5" ry="4.5" fill="white"/>
                         <!-- Right eye hole -->
-                        <ellipse cx="12" cy="-10" rx="7" ry="9" fill="white"/>
+                        <ellipse cx="6" cy="-5" rx="3.5" ry="4.5" fill="white"/>
                         <!-- Wide happy smile -->
-                        <path d="M -10 12 Q 0 22 10 12" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                        <path d="M -5 6 Q 0 11 5 6" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
                     </g>
                 </svg>
             </div>
