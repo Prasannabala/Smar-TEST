@@ -7,7 +7,6 @@ A professional-grade AI-powered tool for generating comprehensive test cases fro
 ## Features
 
 - **Multiple LLM Support**:
-  - **vLLM** (high-performance local inference, 2-4x faster)
   - Ollama (local)
   - Hugging Face
   - OpenAI
@@ -15,269 +14,238 @@ A professional-grade AI-powered tool for generating comprehensive test cases fro
   - Anthropic
 - **Client Context Management**: Store client-specific rules, navigation patterns, and best practices
 - **Comprehensive Test Generation**:
-  - Manual Test Cases (always generated)
-  - Gherkin BDD Feature Files (optional)
-  - Selenium Python Scripts (optional)
-  - Playwright JavaScript Tests (optional)
-- **Multiple Export Formats**: Excel, CSV, Markdown, ZIP bundle
-- **Professional UI**: Modern gradient-based design with smooth animations and progress tracking
-- **Smart Branding**: Stylish interface with "Smar-Test" theme combining indigo, purple, and cyan gradients
+  - Manual Test Cases
+  - Gherkin BDD Feature Files
+  - Selenium Python Scripts
+  - Playwright JavaScript Tests
+- **Multiple Export Formats**: Excel, CSV, Markdown
+- **Modern UI**: Clean, intuitive interface
+- **Secure & Private**: All data stored locally in `~/.smar-test/`
 
 ## Quick Start
 
-### Option 1: Local Installation (Recommended)
-
-#### Prerequisites
+### Prerequisites
 
 - Python 3.9+
-- Ollama running locally (recommended) with Mistral model
+- pip package manager
+- Your favorite IDE (VS Code, PyCharm, etc.)
 
-#### Installation
+### Installation
 
-1. Clone the repository:
+1. **Clone the repository**:
 ```bash
 git clone https://github.com/Prasannabala/Smar-TEST.git
 cd Smar-TEST
 ```
 
-2. Create virtual environment:
+2. **Create virtual environment**:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. Install dependencies:
+3. **Install dependencies**:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Start Ollama with Mistral:
-```bash
-ollama pull mistral:latest
-ollama serve
-```
-
-5. Run Smar-Test:
+4. **Run the application**:
 ```bash
 streamlit run app.py
 ```
 
-6. Open **Smar-Test** at http://localhost:8501 in your browser
+5. **Access the UI**:
+   - Opens automatically in your browser at `http://localhost:8501`
+   - Or manually navigate to that URL
 
-**Data Storage:** All settings and client configs auto-save to `~/.smar-test/` folder
+## First Time Setup
 
----
+### 1. Create a User Account
+- Enter your username to isolate your workspace
+- Your data will be stored in `~/.smar-test/`
 
-### Option 2: Streamlit Cloud (Online Hosting)
+### 2. Configure LLM Settings
+- Click "⚙️ LLM Settings" in sidebar
+- Select your LLM provider (Ollama, OpenAI, Groq, etc.)
+- Configure provider-specific settings
+- Click "Save Settings"
 
-#### Deploy in 3 Steps:
+### 3. (Optional) Set Up Client Context
+- Click "💼 Client Setup" in sidebar
+- Create a new client with project details
+- Add navigation rules, business rules, best practices
+- Upload context documents if needed
 
-1. **Push to GitHub** (already done):
-   - Your code is at: https://github.com/Prasannabala/Smar-TEST
+### 4. Generate Test Cases
+- Click "🚀 Generate Tests" in sidebar
+- Upload your requirements document
+- Select test types to generate
+- Click "Generate Test Cases"
+- Review and export results
 
-2. **Connect to Streamlit Cloud**:
-   - Go to https://share.streamlit.io
-   - Click "Create app"
-   - Select repository: `Smar-TEST`
-   - Branch: `main`
-   - Main file path: `app.py`
-   - Click "Deploy"
+## Data Storage
 
-3. **Your app is live!**
-   - Access at: `https://smar-test.streamlit.app` (or custom URL)
-
-#### Using on Streamlit Cloud:
-
-1. **Important**: Streamlit Cloud **cannot access your local Ollama**
-   - Remote cloud server can't reach `localhost:11434`
-   - ✅ Use cloud API providers instead: **Groq, OpenAI, HuggingFace, or Anthropic**
-   - See **[OLLAMA_CLOUD_SOLUTIONS.md](OLLAMA_CLOUD_SOLUTIONS.md)** for options
-
-2. **First Visit**: Fill in LLM settings (select Groq, OpenAI, HuggingFace, or Anthropic)
-3. **Add API Key**: Enter your API key in LLM Settings (stored in Streamlit Cloud secrets)
-4. **Save Settings**: Settings auto-save to your account
-5. **Next Visit**: Settings auto-load - no reconfiguration needed!
-
-#### Recommended Setup for Streamlit Cloud:
-- **Use Groq**: Free tier, fast, works instantly on cloud
-- Get free API key: https://console.groq.com/keys
-
-## Usage
-
-### 1. Configure LLM (First Time)
-
-1. Click "LLM Settings" in the sidebar
-2. Select your provider (default: Ollama)
-3. For Ollama, ensure it's running and select your model
-4. Click "Save Settings"
-
-### 2. Set Up Client (Optional but Recommended)
-
-1. Click "Client Setup" in the sidebar
-2. Create a new client with:
-   - Client name and project details
-   - Navigation rules (app flows)
-   - Thumb rules (testing conventions)
-   - Business rules (domain logic)
-   - Best practices
-3. Upload context documents if needed
-
-### 3. Generate Test Cases
-
-1. Click "Generate Tests" in the sidebar
-2. Select a client context (optional)
-3. Upload your requirements document (TXT, PDF, or DOCX)
-4. Select test types to generate:
-   - Manual Test Cases (always included)
-   - Gherkin (BDD)
-   - Selenium (Python)
-   - Playwright (JavaScript)
-5. Configure options (edge cases, negative tests, boundary tests)
-6. Click "Generate Test Cases"
-7. Review generated tests
-8. Export in your preferred format
-
-## Data Persistence & Settings
-
-### Local Machine (`~/.smar-test/`)
-
-When running locally, all settings and client data automatically save to:
+All your data is stored **locally** on your machine:
 
 ```
 ~/.smar-test/
-├── settings.json          # LLM provider config (auto-loaded on startup)
-├── clients/               # Client configurations
-│   ├── client_1.json
-│   ├── client_2.json
-│   └── ...
+├── settings.json          # Your LLM configuration
+├── app.db                 # Client data and history
+├── clients/               # Client-specific files
 └── exports/               # Generated test files
-    ├── tests_20240215.xlsx
-    └── ...
 ```
 
 **Benefits:**
-- ✅ Settings auto-load on app startup
-- ✅ All data on your machine (private)
-- ✅ Survives app restarts
-- ✅ Easy to backup (just copy the folder)
+- ✅ Your data stays on your computer
+- ✅ No data sent to any servers
+- ✅ Works completely offline
+- ✅ Easy to backup
 
-### Streamlit Cloud (Online)
+## API Keys & Security
 
-When using Streamlit Cloud, use the sidebar buttons:
+API keys for cloud LLM providers (OpenAI, Groq, etc.) should be provided via **environment variables**:
 
-- **📤 Save**: Downloads `smar_test_settings.json` to your computer
-- **📥 Load**: Upload saved JSON to restore settings
+```bash
+# Set environment variables
+export OPENAI_API_KEY="sk-..."
+export GROQ_API_KEY="gsk_..."
+export ANTHROPIC_API_KEY="sk-ant-..."
 
-**Flow:**
+# Then run the app
+streamlit run app.py
 ```
-1. Visit cloud app → Configure settings
-2. Click "📤 Save" → Download JSON to computer
-3. Next visit → Click "📥 Load" → Upload the JSON
-4. ✅ All settings restored! (API keys excluded for security)
+
+Or create a `.env` file:
+```
+OPENAI_API_KEY=sk-...
+GROQ_API_KEY=gsk_...
+ANTHROPIC_API_KEY=sk-ant-...
 ```
 
----
+**Important**: API keys are never saved to disk and are only used during the session.
 
 ## Project Structure
 
 ```
 Smar-TEST/
-├── app.py                      # Main Streamlit application
-├── requirements.txt            # Python dependencies
-├── .streamlit/
-│   └── config.toml            # Streamlit configuration
+├── app.py                    # Main Streamlit application
+├── requirements.txt          # Python dependencies
 │
-├── config/                     # Configuration
-│   ├── settings.py            # App settings
-│   ├── settings_manager.py    # Settings persistence manager
-│   └── llm_config.py          # LLM configurations
+├── config/                   # Configuration modules
+│   ├── settings.py          # Application settings
+│   ├── settings_manager.py  # Settings persistence
+│   ├── user_session.py      # User authentication
+│   └── llm_config.py        # LLM configurations
 │
-├── core/                       # Core logic
-│   ├── llm_adapter.py         # LLM provider adapters
-│   ├── document_parser.py      # Document parsing
-│   ├── test_generator.py       # Test generation engine
-│   └── export_handler.py       # Export functionality
+├── core/                     # Core functionality
+│   ├── llm_adapter.py       # LLM provider adapters
+│   ├── document_parser.py   # Document parsing
+│   ├── test_generator.py    # Test generation engine
+│   └── export_handler.py    # Export functionality
 │
-├── models/                     # Data models
-│   ├── client_context.py       # Client context model
-│   ├── test_case.py            # Test case models
-│   └── requirement.py          # Requirement model
+├── models/                   # Data models
+│   ├── client_context.py    # Client context
+│   ├── test_case.py         # Test case models
+│   └── requirement.py       # Requirement model
 │
-├── storage/                    # Data persistence
-│   ├── database.py            # SQLite operations
-│   └── file_manager.py        # File management
+├── storage/                  # Data persistence
+│   ├── database.py          # SQLite database
+│   └── file_manager.py      # File management
 │
-├── templates/                  # Prompt templates
-│   └── prompts.py             # LLM prompts
-│
-└── ui/                         # User interface
-    ├── components.py          # UI components
-    └── styles.py              # CSS styling
+└── ui/                       # User interface
+    ├── components.py        # UI components
+    └── styles.py            # Styling
 ```
-
-## Test Case Format
-
-Generated manual test cases include:
-
-| Field | Description |
-|-------|-------------|
-| Test ID | Unique identifier (TC_001, TC_002, etc.) |
-| Test Name | Descriptive name |
-| Description | What the test verifies |
-| Preconditions | Required setup |
-| Test Steps | Numbered steps with actions |
-| Expected Results | Expected outcomes |
-| Priority | High, Medium, Low (auto-assigned) |
-| Status | New, In Progress, Passed, Failed, Blocked |
-| Category | Functional, UI, Integration, etc. |
-| Tags | Keywords for filtering |
 
 ## LLM Providers
 
-### vLLM (Recommended for High-Performance Local) ⚡
-- **2-4x faster** than Ollama or standard transformers
-- Best GPU utilization and throughput
-- Supports Llama, Qwen, Mistral, and more
-- Requires NVIDIA GPU with CUDA
+### Ollama (Local - Recommended)
+- Free and runs on your computer
+- No API key needed
+- Works offline
+- Supports: Mistral, Llama, Qwen, etc.
 
-**Quick Start with Docker:**
+Setup:
 ```bash
-# Start vLLM server
-docker-compose --profile vllm up -d
-
-# Configure in UI: Select "vLLM (High-Performance Local)" provider
+ollama pull mistral:latest
+ollama serve  # Keep running in separate terminal
 ```
 
-### Ollama (Easy Local Setup)
-- Free, runs locally
-- No API key needed
-- Works on CPU/GPU, all platforms
-- Supports many models (Mistral, Llama, etc.)
-
-### Hugging Face
-- Local inference or API
-- Many open-source models
-- API token optional for public models
-
 ### OpenAI
-- GPT-4, GPT-3.5
 - Requires API key
+- Models: GPT-4, GPT-3.5
+- Get key: https://platform.openai.com/api-keys
 
 ### Groq
-- Fast inference
-- Llama, Mixtral models
 - Requires API key
+- Fast inference
+- Free tier available
+- Get key: https://console.groq.com/keys
 
 ### Anthropic
-- Claude models
 - Requires API key
+- Claude models
+- Get key: https://console.anthropic.com
+
+### Hugging Face
+- Requires API token (optional for public models)
+- Many open-source models
+- Get token: https://huggingface.co/settings/tokens
+
+## Testing Workflow
+
+1. **Prepare requirements document** (TXT, PDF, or DOCX)
+2. **Add client context** (optional but recommended)
+3. **Configure LLM settings**
+4. **Upload requirements** to the app
+5. **Select test types** to generate
+6. **Review generated tests**
+7. **Export in preferred format**
+8. **Import to your test management system**
+
+## Security & Privacy
+
+- ✅ All data stored locally on your machine
+- ✅ API keys never saved to disk
+- ✅ User authentication for workspace isolation
+- ✅ No data sent to external servers (except LLM API calls)
+- ✅ Complete control over your data
+
+See `SECURITY.md` for detailed security documentation.
+
+## Troubleshooting
+
+### Issue: "Port 8501 already in use"
+```bash
+streamlit run app.py --server.port 8502
+```
+
+### Issue: "Module not found"
+```bash
+# Ensure virtual environment is activated
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### Issue: "Ollama connection refused"
+```bash
+# Start Ollama in a separate terminal
+ollama serve
+```
+
+### Issue: "API key not recognized"
+```bash
+# Verify environment variable is set
+echo $OPENAI_API_KEY  # On Windows: echo %OPENAI_API_KEY%
+```
 
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Submit a pull request
+4. Test thoroughly
+5. Submit a pull request
 
 ## License
 
@@ -286,3 +254,7 @@ MIT License - feel free to use and modify.
 ## Support
 
 For issues and feature requests, please open a GitHub issue.
+
+---
+
+**Happy testing! 🚀**
