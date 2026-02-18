@@ -1512,29 +1512,24 @@ def render_home_page():
             justify-content: center;
         ">
             <div style="margin-bottom: 0.5rem;">
-                <svg width="50" height="50" viewBox="0 0 100 100" style="margin: 0 auto;">
-                    <!-- Red mask (left) - tilted/rotated for dynamic look -->
-                    <g transform="translate(25, 42) rotate(-15)">
-                        <!-- Mask shape -->
-                        <ellipse cx="0" cy="0" rx="17" ry="20" fill="#D94436"/>
-                        <!-- Left eye hole -->
-                        <ellipse cx="-6" cy="-4" rx="3" ry="4" fill="white"/>
-                        <!-- Right eye hole -->
-                        <ellipse cx="6" cy="-4" rx="3" ry="4" fill="white"/>
-                        <!-- Mouth smile -->
-                        <path d="M -4 8 Q 0 11 4 8" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-                    </g>
-                    <!-- Green mask (right) - more upright, happier expression -->
-                    <g transform="translate(65, 42)">
-                        <!-- Mask shape -->
-                        <ellipse cx="0" cy="0" rx="17" ry="20" fill="#2DA044"/>
-                        <!-- Left eye hole -->
-                        <ellipse cx="-6" cy="-5" rx="3.5" ry="4.5" fill="white"/>
-                        <!-- Right eye hole -->
-                        <ellipse cx="6" cy="-5" rx="3.5" ry="4.5" fill="white"/>
-                        <!-- Wide happy smile -->
-                        <path d="M -5 6 Q 0 11 5 6" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-                    </g>
+                <svg width="50" height="50" viewBox="0 0 120 100" style="margin: 0 auto;">
+                    <!-- Red/Tragedy mask (left) -->
+                    <circle cx="35" cy="50" r="28" fill="#E85C47"/>
+                    <!-- Red mask left eye -->
+                    <circle cx="28" cy="42" r="5" fill="white"/>
+                    <!-- Red mask right eye -->
+                    <circle cx="42" cy="42" r="5" fill="white"/>
+                    <!-- Red mask sad mouth (downward curve) -->
+                    <path d="M 28 58 Q 35 52 42 58" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+                    <!-- Green/Comedy mask (right) - overlapping -->
+                    <circle cx="85" cy="50" r="28" fill="#2DA555"/>
+                    <!-- Green mask left eye -->
+                    <circle cx="78" cy="42" r="5" fill="white"/>
+                    <!-- Green mask right eye -->
+                    <circle cx="92" cy="42" r="5" fill="white"/>
+                    <!-- Green mask happy mouth (upward curve) -->
+                    <path d="M 78 62 Q 85 70 92 62" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
                 </svg>
             </div>
             <h3 style="margin: 0.5rem 0; font-size: 1.1rem; color: #0f172a;">Playwright</h3>
