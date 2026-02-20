@@ -315,12 +315,10 @@ class TestGenerator:
                             tags=tc_data.get('tags', [])
                         )
                         tests.append(test)
-                    except Exception as e:
-                        print(f"Warning: Failed to parse test case: {e}")
+                    except Exception:
                         continue
 
-        except Exception as e:
-            print(f"Warning: Failed to parse JSON response: {e}")
+        except Exception:
             # Fall back to creating a basic test case
             tests.append(ManualTestCase(
                 test_id="TC_001",
@@ -370,8 +368,7 @@ class TestGenerator:
                         )
                         scripts.append(script)
 
-        except Exception as e:
-            print(f"Warning: Failed to parse Gherkin JSON response: {e}")
+        except Exception:
 
         # Fallback: extract raw Gherkin feature content from response
         if not scripts:
@@ -443,8 +440,7 @@ class TestGenerator:
                         )
                         scripts.append(script)
 
-        except Exception as e:
-            print(f"Warning: Failed to parse {script_type} JSON response: {e}")
+        except Exception:
 
         # Fallback: extract raw code blocks from response
         if not scripts:
@@ -559,8 +555,7 @@ class TestGenerator:
                     tc_data['test_steps'] = steps
                     additional.append(ManualTestCase.from_dict(tc_data))
                 return additional
-        except Exception as e:
-            print(f"Warning: Failed to parse enhancement response: {e}")
+        except Exception:
 
         return []
 

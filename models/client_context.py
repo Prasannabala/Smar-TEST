@@ -265,8 +265,7 @@ class ClientContextManager:
             from config.settings_manager import SettingsManager
             manager = SettingsManager()
             return manager.export_client_to_json(client_context.id, client_context.to_dict())
-        except Exception as e:
-            print(f"Warning: Could not export client {client_context.name} to JSON: {e}")
+        except Exception:
             return False
 
     def delete(self, client_id: str) -> bool:

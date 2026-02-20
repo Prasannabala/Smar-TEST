@@ -51,8 +51,7 @@ class SettingsManager:
             try:
                 with open(self.settings_file, 'r', encoding='utf-8') as f:
                     return json.load(f)
-            except (json.JSONDecodeError, IOError) as e:
-                print(f"Warning: Could not load settings: {e}")
+            except (json.JSONDecodeError, IOError):
                 return {}
         return {}
 
@@ -81,8 +80,7 @@ class SettingsManager:
             with open(self.settings_file, 'w', encoding='utf-8') as f:
                 json.dump(safe_settings, f, indent=2, ensure_ascii=False)
             return True
-        except IOError as e:
-            print(f"Warning: Could not save settings: {e}")
+        except IOError:
             return False
 
     def load_client(self, client_id: str) -> Optional[Dict[str, Any]]:
@@ -100,8 +98,7 @@ class SettingsManager:
             try:
                 with open(client_file, 'r', encoding='utf-8') as f:
                     return json.load(f)
-            except (json.JSONDecodeError, IOError) as e:
-                print(f"Warning: Could not load client {client_id}: {e}")
+            except (json.JSONDecodeError, IOError):
                 return None
         return None
 
@@ -121,8 +118,7 @@ class SettingsManager:
             with open(client_file, 'w', encoding='utf-8') as f:
                 json.dump(client_data, f, indent=2, ensure_ascii=False)
             return True
-        except IOError as e:
-            print(f"Warning: Could not save client {client_id}: {e}")
+        except IOError:
             return False
 
     def delete_client(self, client_id: str) -> bool:
@@ -140,8 +136,7 @@ class SettingsManager:
             try:
                 client_file.unlink()
                 return True
-            except IOError as e:
-                print(f"Warning: Could not delete client {client_id}: {e}")
+            except IOError:
                 return False
         return True
 
@@ -196,8 +191,7 @@ class SettingsManager:
                     self.save_client(client_id, client_data)
 
             return True
-        except Exception as e:
-            print(f"Warning: Could not import settings: {e}")
+        except Exception:
             return False
 
     def get_settings_path(self) -> Path:
@@ -261,8 +255,7 @@ class SettingsManager:
             with open(client_file, 'w', encoding='utf-8') as f:
                 json.dump(client_data, f, indent=2, ensure_ascii=False)
             return True
-        except IOError as e:
-            print(f"Warning: Could not export client {client_id} to JSON: {e}")
+        except IOError:
             return False
 
     def export_all_clients_from_db(self) -> int:
@@ -303,5 +296,4 @@ class SettingsManager:
 
             return export_count
         except Exception as e:
-            print(f"Warning: Could not export clients from database: {e}")
             return 0
