@@ -369,6 +369,7 @@ class TestGenerator:
                         scripts.append(script)
 
         except Exception:
+            pass
 
         # Fallback: extract raw Gherkin feature content from response
         if not scripts:
@@ -441,6 +442,7 @@ class TestGenerator:
                         scripts.append(script)
 
         except Exception:
+            pass
 
         # Fallback: extract raw code blocks from response
         if not scripts:
@@ -556,6 +558,7 @@ class TestGenerator:
                     additional.append(ManualTestCase.from_dict(tc_data))
                 return additional
         except Exception:
+            pass
 
         return []
 
