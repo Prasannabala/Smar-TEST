@@ -1,0 +1,24 @@
+{
+  "name": "playwright-lego-framework",
+  "version": "1.0.0",
+  "description": "LEGO-block Playwright automation framework with AI-powered test conversion",
+  "scripts": {
+    "record": "playwright codegen",
+    "convert": "ts-node scripts/convert.ts",
+    "test": "playwright test",
+    "test:generated": "playwright test tests/generated/",
+    "install:browsers": "playwright install chromium",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "openai": "^4.0.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.5.0"
+  }
+}

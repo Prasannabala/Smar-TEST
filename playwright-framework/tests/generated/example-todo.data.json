@@ -1,0 +1,84 @@
+{
+  "scenarios": [
+    {
+      "name": "Add a single todo item",
+      "steps": [
+        {
+          "block": "Navigate",
+          "data": { "url": "https://demo.playwright.dev/todomvc" }
+        },
+        {
+          "block": "Fill",
+          "data": {
+            "selector": "[placeholder='What needs to be done?']",
+            "value": "Buy groceries"
+          }
+        },
+        {
+          "block": "Click",
+          "data": { "selector": "[placeholder='What needs to be done?']" }
+        },
+        {
+          "block": "AssertVisible",
+          "data": { "selector": "text=Buy groceries" }
+        }
+      ]
+    },
+    {
+      "name": "Add multiple todo items",
+      "steps": [
+        {
+          "block": "Navigate",
+          "data": { "url": "https://demo.playwright.dev/todomvc" }
+        },
+        {
+          "block": "Fill",
+          "data": {
+            "selector": "[placeholder='What needs to be done?']",
+            "value": "Read a book"
+          }
+        },
+        {
+          "block": "Click",
+          "data": { "selector": "[placeholder='What needs to be done?']" }
+        },
+        {
+          "block": "AssertVisible",
+          "data": { "selector": "text=Read a book" }
+        }
+      ]
+    },
+    {
+      "name": "Complete a todo item",
+      "steps": [
+        {
+          "block": "Navigate",
+          "data": { "url": "https://demo.playwright.dev/todomvc" }
+        },
+        {
+          "block": "Fill",
+          "data": {
+            "selector": "[placeholder='What needs to be done?']",
+            "value": "Walk the dog"
+          }
+        },
+        {
+          "block": "Click",
+          "data": { "selector": "[placeholder='What needs to be done?']" }
+        },
+        {
+          "block": "Click",
+          "data": { "selector": "[title='Walk the dog']" }
+        },
+        {
+          "block": "Click",
+          "data": { "selector": "a:has-text('Completed')" }
+        },
+        {
+          "block": "AssertVisible",
+          "data": { "selector": "text=Walk the dog" }
+        }
+      ]
+    }
+  ]
+}
