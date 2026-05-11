@@ -1,0 +1,35 @@
+{
+  "scenarios": [
+    {
+      "name": "Add a single todo item",
+      "steps": [
+        {
+          "block": "AddTodoItem",
+          "data": { "todoText": "Buy groceries" }
+        }
+      ]
+    },
+    {
+      "name": "Add a different todo item",
+      "steps": [
+        {
+          "block": "AddTodoItem",
+          "data": { "todoText": "Read a book" }
+        }
+      ]
+    },
+    {
+      "name": "Complete a todo item",
+      "steps": [
+        {
+          "block": "AddTodoItem",
+          "data": { "todoText": "Walk the dog" }
+        },
+        {
+          "block": "CompleteTodoItem",
+          "data": { "todoText": "Walk the dog" }
+        }
+      ]
+    }
+  ]
+}
